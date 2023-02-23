@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { action, computed, makeAutoObservable } from "mobx";
+import { ProductHash } from "./types";
 
 class Store {
   constructor() {
@@ -9,6 +10,8 @@ class Store {
   hoveredCell: number | null = null;
   hoveredRow: number | null = null;
   hoveredRowCell: number | null = null;
+
+  productsHash: ProductHash = {};
 
   /////////// COMPUTED /////////////
   @computed

@@ -9,8 +9,8 @@ import {
   Loader,
 } from "@mantine/core";
 import { observer } from "mobx-react-lite";
-import { TriangleFill } from "react-bootstrap-icons";
 import CommentIcon from "../producthuntIcons/CommentIcon";
+import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
 
 const TooltipSkeleton = () => {
   const theme = useMantineTheme();
@@ -22,7 +22,7 @@ const TooltipSkeleton = () => {
           <Skeleton width="100%" height={12} />
           <Group spacing="xs" w="100%" noWrap>
             <Group spacing={4} noWrap>
-              <TriangleFill size={12} color={theme.other.primaryColor} />
+              <UpvoteIcon w={12} h={12} c={theme.colors.green[5]} />
               <Skeleton width={16} height={12} />
             </Group>
             <Group spacing={4} noWrap>

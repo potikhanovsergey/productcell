@@ -1,5 +1,5 @@
 import { AppStore } from "@/store/AppStore";
-import { Group, SimpleGrid, Stack, StackProps, Tooltip } from "@mantine/core";
+import { SimpleGrid, Stack, StackProps, Tooltip } from "@mantine/core";
 import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
@@ -12,28 +12,46 @@ export const monthsArray = Array(months).fill(null);
 export const daysArray = Array(31).fill(null);
 
 const dataMock = {
-  id: "376395",
-  name: "First 100 Users V2",
-  votesCount: 747,
+  id: "375220",
+  name: "HyperSwitch",
+  votesCount: 2229,
   thumbnail: {
-    url: "https://ph-files.imgix.net/b5cd07be-173c-4266-8b8d-700d29166ea0.gif?auto=format",
+    url: "https://ph-files.imgix.net/77190f49-18e0-4d2a-bb14-0f0e1ba9a4bb.png?auto=format",
   },
-  tagline: "Step-by-step marketing ideas for your first 100 users",
-  url: "https://www.producthunt.com/posts/first-100-users-v2?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+PH+API+Explorer+%28ID%3A+9162%29",
+  tagline: "Fast, reliable, and affordable open source payments switch",
+  url: "https://www.producthunt.com/posts/hyperswitch-2?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+PH+API+Explorer+%28ID%3A+9162%29",
   topics: {
     nodes: [
       {
-        name: "Marketing",
+        name: "API",
       },
       {
-        name: "Maker Tools",
+        name: "Open Source",
       },
       {
-        name: "Growth Hacks ",
+        name: "User Experience",
+      },
+      {
+        name: "Fintech",
+      },
+      {
+        name: "Payments",
+      },
+      {
+        name: "Developer Tools",
+      },
+      {
+        name: "GitHub",
+      },
+      {
+        name: "Tech",
+      },
+      {
+        name: "SDK",
       },
     ],
   },
-  commentsCount: 135,
+  commentsCount: 449,
 };
 
 const CalendarGrid = (props: StackProps) => {
@@ -71,16 +89,7 @@ const CalendarGrid = (props: StackProps) => {
             ? "none !important"
             : undefined,
       }}
-      label={
-        <TooltipLabel
-          tagline={dataMock.tagline}
-          thumbnailUrl={dataMock.thumbnail.url}
-          topics={dataMock.topics.nodes.map((n) => n.name)}
-          name={dataMock.name}
-          votesCount={dataMock.votesCount}
-          commentsCount={dataMock.commentsCount}
-        />
-      }
+      label={<TooltipLabel />}
       color="blue"
     >
       <Stack spacing={0} {...props}>
