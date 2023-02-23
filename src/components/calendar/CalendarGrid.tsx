@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
 import Day from "./Day";
+import PulsatingCircle from "./PulsatingCircle";
 import TooltipLabel from "./TooltipLabel";
 
 const months = 36;
@@ -64,7 +65,7 @@ const CalendarGrid = (props: StackProps) => {
         .daysInMonth();
 
       if (i === 0) {
-        daysInMonth = dayjs().date() - 1;
+        daysInMonth = dayjs().date();
       }
       const monthArray = Array.from(Array(daysInMonth).keys());
       output.push(monthArray);
@@ -100,21 +101,26 @@ const CalendarGrid = (props: StackProps) => {
             key={rowIndex}
             spacing={0}
           >
-            {row.map((day, dayIndex) => (
-              <Day
-                rowIndex={rowIndex}
-                dayIndex={dayIndex}
-                url={dataMock.url}
-                key={dayIndex}
-                index={
-                  rowIndex === 0
-                    ? dayIndex
-                    : rows
-                        .slice(0, rowIndex)
-                        .reduce((acc, curr) => acc + curr.length, 0) + dayIndex
-                }
-              />
-            ))}
+            {row.map((day, dayIndex) =>
+              rowIndex === 0 && dayIndex === dayjs().date() - 1 ? (
+                <PulsatingCircle key={dayIndex} />
+              ) : (
+                <Day
+                  rowIndex={rowIndex}
+                  dayIndex={dayIndex}
+                  url={dataMock.url}
+                  key={dayIndex}
+                  index={
+                    rowIndex === 0
+                      ? dayIndex
+                      : rows
+                          .slice(0, rowIndex)
+                          .reduce((acc, curr) => acc + curr.length, 0) +
+                        dayIndex
+                  }
+                />
+              )
+            )}
           </SimpleGrid>
         ))}
       </Stack>

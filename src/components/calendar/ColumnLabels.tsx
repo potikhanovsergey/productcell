@@ -7,7 +7,13 @@ const ColumnLabels = (props: StackProps) => {
   return (
     <Stack
       spacing={4}
-      sx={{ zIndex: 10, position: "sticky", top: 0, background: theme.white }}
+      sx={{
+        zIndex: 10,
+        position: "sticky",
+        top: 0,
+        background: theme.white,
+        userSelect: "none",
+      }}
       {...props}
     >
       <Group>
