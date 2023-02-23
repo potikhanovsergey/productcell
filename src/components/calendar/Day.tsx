@@ -10,25 +10,30 @@ import { observer } from "mobx-react-lite";
 import { FC, ForwardedRef, forwardRef, useCallback } from "react";
 
 import Image from "next/image";
+import { ProductHuntApiResponse } from "@/store/types";
 
 const useStyles = createStyles(
-  (theme, { discovered }: { discovered: boolean }) => ({
+  (theme, { product }: { product: ProductHuntApiResponse }) => ({
     hitbox: {
       padding: 2,
       "&:hover": {
         [`& .${getStylesRef("box")}`]: {
-          background: theme.colors.orange[5],
+          backgroundColor: theme.colors.orange[5],
         },
       },
     },
     box: {
       ref: getStylesRef("box"),
       aspectRatio: "1",
-      background: discovered ? theme.colors.orange[5] : theme.colors.gray[3],
+      backgroundColor: !!product
+        ? theme.colors.orange[5]
+        : theme.colors.gray[3],
+      backgroundImage: product
+        ? `url(${product.thumbnail.url}&width=100)`
+        : undefined,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
       borderRadius: theme.radius.xs,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
       position: "relative",
     },
   })
@@ -54,7 +59,7 @@ const Day: FC<DayProps> = forwardRef(
     }, []);
 
     const product = AppStore.productsHash[`${rowIndex} ${dayIndex}`];
-    const { classes } = useStyles({ discovered: !!product });
+    const { classes } = useStyles({ product });
 
     return (
       <UnstyledButton
@@ -68,15 +73,7 @@ const Day: FC<DayProps> = forwardRef(
         onMouseLeave={onMouseLeave}
         {...props}
       >
-        <Box className={classes.box}>
-          <Box display={product ? undefined : "none"}>
-            <Image
-              alt={product ? `${product.url} preview` : ""}
-              fill
-              src={product ? `${product?.thumbnail?.url}&width=100` : "/"}
-            />
-          </Box>
-        </Box>
+        <Box className={classes.box} />
       </UnstyledButton>
     );
   }

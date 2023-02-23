@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
 const PulsatingCircle = () => {
   const { classes } = useStyles();
   return (
-    <Tooltip label="To be discovered today">
+    <Tooltip label="To be discovered today, click to vote">
       <Center
         component="a"
         target="_blank"

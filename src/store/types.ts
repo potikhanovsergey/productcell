@@ -13,6 +13,14 @@ export interface ProductHuntApiResponse {
   };
 }
 
+export interface AxiosProductResponse {
+  data: {
+    posts: {
+      nodes: ProductHuntApiResponse[];
+    };
+  };
+}
+
 export interface ProductHash {
   [key: string]: ProductHuntApiResponse;
 }
