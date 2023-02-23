@@ -7,13 +7,35 @@ import {
   Text,
   useMantineTheme,
   Loader,
+  Progress,
 } from "@mantine/core";
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import CommentIcon from "../producthuntIcons/CommentIcon";
 import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
 
+const ProgressBar = observer(() => {
+  const [completed, setCompleted] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCompleted((prev) => prev + 20);
+    }, 100);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCompleted(0);
+  }, [AppStore.hoveredRowCell]);
+
+  return <Progress size="sm" color="orange" value={completed} />;
+});
+
 const TooltipSkeleton = () => {
   const theme = useMantineTheme();
+
   return (
     <>
       <Group noWrap w="100%" align="flex-start">
@@ -38,14 +60,21 @@ const TooltipSkeleton = () => {
           <Skeleton key={topic} width={48} height={8} />
         ))}
       </Group>
-      {AppStore.hoveredRowCell !== null && AppStore.hoveredRow !== null && (
-        <Group noWrap position="apart">
+      <div>
+        {AppStore.hoveredRowCell !== null && AppStore.hoveredRow !== null && (
           <Text color="dimmed" size="xs">
             {AppStore.hoveredCellDate}
           </Text>
+        )}
+        <Group noWrap position="apart" mb={4}>
+          <Text color="dimmed" size="xs">
+            Keep hovering to load product
+          </Text>
           <Loader color="orange" size="xs" />
         </Group>
-      )}
+
+        {AppStore.hoveredRowCell !== null && <ProgressBar />}
+      </div>
     </>
   );
 };

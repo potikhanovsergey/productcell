@@ -57,6 +57,13 @@ const MantineTheme: MantineThemeOverride = {
         },
       }),
     },
+    Progress: {
+      styles: (theme) => ({
+        root: {
+          background: theme.colors.dark[5],
+        },
+      }),
+    },
     Tooltip: {
       defaultProps: {
         transitionProps: {
