@@ -1,20 +1,12 @@
 import { AppStore } from "@/store/AppStore";
-import {
-  Group,
-  Badge,
-  Image,
-  Stack,
-  Text,
-  useMantineTheme,
-  Box,
-} from "@mantine/core";
+import { Group, Badge, Stack, Text, useMantineTheme, Box } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons-react";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
 import CommentIcon from "../producthuntIcons/CommentIcon";
 import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
 import TooltipSkeleton from "./TooltipSkeleton";
 import TooltipWrapper from "./TooltipWrapper";
+import Image from "next/image";
 
 const TooltipLabel = () => {
   const theme = useMantineTheme();
@@ -27,12 +19,15 @@ const TooltipLabel = () => {
       ) : (
         <>
           <Group noWrap w="100%" align="flex-start">
-            <Image
-              radius="sm"
-              width={48}
-              src={AppStore.productsHash[produchHashKey].thumbnail.url}
-              alt={AppStore.productsHash[produchHashKey].name}
-            />
+            <Box sx={{ borderRadius: theme.radius.sm }}>
+              <Image
+                width={48}
+                height={48}
+                src={`${AppStore.productsHash[produchHashKey].thumbnail.url}&width=100`}
+                alt={AppStore.productsHash[produchHashKey].name}
+              />
+            </Box>
+
             <Stack spacing={0}>
               <Text weight="bold">
                 {AppStore.productsHash[produchHashKey].name}

@@ -102,6 +102,7 @@ const CalendarGrid = (props: StackProps) => {
           >
             {row.map((day, dayIndex) => (
               <Day
+                rowIndex={rowIndex}
                 dayIndex={dayIndex}
                 url={dataMock.url}
                 key={dayIndex}

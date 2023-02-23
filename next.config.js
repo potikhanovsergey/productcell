@@ -10,6 +10,12 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  env: {
+    PRODUCT_HUNT_API_TOKEN: process.env.PRODUCT_HUNT_API_TOKEN,
+  },
+  images: {
+    domains: ["ph-files.imgix.net"],
+  },
 };
 
 module.exports = nextConfig;

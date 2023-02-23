@@ -22,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: `Bearer fA3IFlvVj8OM2HbXU_dKMXwdAq0HA0Akl8nehMt3358`,
+      authorization: `Bearer ${process.env.PRODUCT_HUNT_API_TOKEN}`,
     },
   };
 });

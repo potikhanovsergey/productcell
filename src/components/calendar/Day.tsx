@@ -3,43 +3,49 @@ import {
   Box,
   createStyles,
   UnstyledButton,
-  Text,
   UnstyledButtonProps,
   getStylesRef,
 } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { observer } from "mobx-react-lite";
-import { FC, ForwardedRef, forwardRef, memo, useCallback } from "react";
+import { FC, ForwardedRef, forwardRef, useCallback } from "react";
 
-const useStyles = createStyles((theme) => ({
-  hitbox: {
-    padding: 2,
-    "&:hover": {
-      [`& .${getStylesRef("box")}`]: {
-        background: theme.colors.orange[5],
+import Image from "next/image";
+
+const useStyles = createStyles(
+  (theme, { discovered }: { discovered: boolean }) => ({
+    hitbox: {
+      padding: 2,
+      "&:hover": {
+        [`& .${getStylesRef("box")}`]: {
+          background: theme.colors.orange[5],
+        },
       },
     },
-  },
-  box: {
-    ref: getStylesRef("box"),
-    aspectRatio: "1",
-    background: theme.colors.gray[3],
-    borderRadius: theme.radius.xs,
-  },
-}));
+    box: {
+      ref: getStylesRef("box"),
+      aspectRatio: "1",
+      background: discovered ? theme.colors.orange[5] : theme.colors.gray[3],
+      borderRadius: theme.radius.xs,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+    },
+  })
+);
 
 interface DayProps extends UnstyledButtonProps {
   index: number;
   url: string;
   dayIndex: number;
+  rowIndex: number;
 }
 
 const Day: FC<DayProps> = forwardRef(
   (
-    { index, dayIndex, url, ...props },
+    { index, dayIndex, rowIndex, url, ...props },
     ref: ForwardedRef<HTMLAnchorElement>
   ) => {
-    const { classes } = useStyles();
     const onMouseEnter = useCallback(() => {
       AppStore.setHoveredRowCell(dayIndex);
     }, [dayIndex]);
@@ -48,10 +54,13 @@ const Day: FC<DayProps> = forwardRef(
       AppStore.setHoveredRowCell(null);
     }, []);
 
+    const product = AppStore.productsHash[`${rowIndex} ${dayIndex}`];
+    const { classes } = useStyles({ discovered: !!product });
+
     return (
       <UnstyledButton
         component="a"
-        href={url}
+        href={product?.url}
         target="_blank"
         ref={ref}
         className={classes.hitbox}
@@ -59,7 +68,15 @@ const Day: FC<DayProps> = forwardRef(
         onMouseLeave={onMouseLeave}
         {...props}
       >
-        <Box className={classes.box} />
+        <Box className={classes.box}>
+          <Box display={product ? undefined : "none"}>
+            <Image
+              alt={product ? `${product.url} preview` : ""}
+              fill
+              src={product ? `${product?.thumbnail?.url}&width=100` : "/"}
+            />
+          </Box>
+        </Box>
       </UnstyledButton>
     );
   }
@@ -67,4 +84,4 @@ const Day: FC<DayProps> = forwardRef(
 
 Day.displayName = "Day";
 
-export default memo(Day);
+export default observer(Day);
