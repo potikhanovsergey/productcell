@@ -1,5 +1,7 @@
-import { Group, Stack, StackProps, Tooltip } from "@mantine/core";
+import { AppStore } from "@/store/AppStore";
+import { Group, SimpleGrid, Stack, StackProps, Tooltip } from "@mantine/core";
 import dayjs from "dayjs";
+import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
 import Day from "./Day";
 import TooltipLabel from "./TooltipLabel";
@@ -10,27 +12,28 @@ export const monthsArray = Array(months).fill(null);
 export const daysArray = Array(31).fill(null);
 
 const dataMock = {
-  id: "373367",
-  name: "Rizz!",
-  votesCount: 751,
+  id: "376395",
+  name: "First 100 Users V2",
+  votesCount: 747,
   thumbnail: {
-    url: "https://ph-files.imgix.net/0c89d100-5f55-4785-925b-a4a563ec54b3.png?auto=format",
+    url: "https://ph-files.imgix.net/b5cd07be-173c-4266-8b8d-700d29166ea0.gif?auto=format",
   },
-  tagline: "The world's most powerful AI, built into your keyboard",
-  url: "https://www.producthunt.com/posts/rizz?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+PH+API+Explorer+%28ID%3A+9162%29",
+  tagline: "Step-by-step marketing ideas for your first 100 users",
+  url: "https://www.producthunt.com/posts/first-100-users-v2?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+PH+API+Explorer+%28ID%3A+9162%29",
   topics: {
     nodes: [
       {
-        name: "Productivity",
+        name: "Marketing",
       },
       {
-        name: "Custom Keyboards",
+        name: "Maker Tools",
       },
       {
-        name: "Artificial Intelligence",
+        name: "Growth Hacks ",
       },
     ],
   },
+  commentsCount: 135,
 };
 
 const CalendarGrid = (props: StackProps) => {
@@ -50,13 +53,23 @@ const CalendarGrid = (props: StackProps) => {
     }
     return output;
   }, []);
+
+  const onRowMouseEnter = (index: number) => {
+    AppStore.setHoveredRow(index);
+  };
   return (
     <Tooltip.Floating
       multiline
-      position="top"
-      offset={24}
+      radius="sm"
+      offset={32}
+      width={240}
       sx={{
         maxWidth: 240,
+        display:
+          typeof AppStore.hoveredRowCell !== "number" ||
+          typeof AppStore.hoveredRow !== "number"
+            ? "none !important"
+            : undefined,
       }}
       label={
         <TooltipLabel
@@ -65,42 +78,38 @@ const CalendarGrid = (props: StackProps) => {
           topics={dataMock.topics.nodes.map((n) => n.name)}
           name={dataMock.name}
           votesCount={dataMock.votesCount}
+          commentsCount={dataMock.commentsCount}
         />
       }
       color="blue"
     >
-      <Stack spacing={4} {...props}>
+      <Stack spacing={0} {...props}>
         {rows.map((row, rowIndex) => (
-          <Group
-            grow
-            sx={{ flexDirection: "row-reverse" }}
-            noWrap
+          <SimpleGrid
+            onMouseEnter={() => onRowMouseEnter(rowIndex)}
+            cols={31}
             key={rowIndex}
-            spacing={4}
+            spacing={0}
           >
-            {daysArray.map((day, dayIndex) =>
-              dayIndex < row.length ? (
-                <Day
-                  url={dataMock.url}
-                  key={dayIndex}
-                  index={
-                    rowIndex === 0
-                      ? dayIndex
-                      : rows
-                          .slice(0, rowIndex)
-                          .reduce((acc, curr) => acc + curr.length, 0) +
-                        dayIndex
-                  }
-                />
-              ) : (
-                <span key={dayIndex}></span>
-              )
-            )}
-          </Group>
+            {row.map((day, dayIndex) => (
+              <Day
+                dayIndex={dayIndex}
+                url={dataMock.url}
+                key={dayIndex}
+                index={
+                  rowIndex === 0
+                    ? dayIndex
+                    : rows
+                        .slice(0, rowIndex)
+                        .reduce((acc, curr) => acc + curr.length, 0) + dayIndex
+                }
+              />
+            ))}
+          </SimpleGrid>
         ))}
       </Stack>
     </Tooltip.Floating>
   );
 };
 
-export default CalendarGrid;
+export default observer(CalendarGrid);

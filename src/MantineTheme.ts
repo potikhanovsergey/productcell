@@ -1,6 +1,6 @@
 import { MantineThemeOverride, ButtonStylesParams } from "@mantine/core";
 
-const primaryColor = "rgb(255, 97, 84)";
+const primaryColor = "#FF5454";
 
 const MantineTheme: MantineThemeOverride = {
   primaryShade: 5,
@@ -8,6 +8,21 @@ const MantineTheme: MantineThemeOverride = {
   other: {
     primaryColor,
   },
+  colors: {
+    orange: [
+      "#ffeeee",
+      "#ffdddd",
+      "#ffaaaa",
+      "#ff8787",
+      "#ff6565",
+      "#FF5454", // [5]
+      "#e64c4c",
+      "#cc4343",
+      "#993232",
+      "#662222",
+    ],
+  },
+  primaryColor: "orange",
   components: {
     Loader: {
       defaultProps: {

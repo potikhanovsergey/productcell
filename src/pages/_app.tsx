@@ -2,10 +2,12 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import MantineTheme from "@/MantineTheme";
+import { ApolloProvider } from "@apollo/client";
+import { useApollo } from "../apollo-client";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
-
+  const apolloClient = useApollo(pageProps.initialApolloState);
   return (
     <>
       <Head>
@@ -15,10 +17,11 @@ export default function App(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
-        <Component {...pageProps} />
-      </MantineProvider>
+      <ApolloProvider client={apolloClient}>
+        <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
+          <Component {...pageProps} />
+        </MantineProvider>
+      </ApolloProvider>
     </>
   );
 }
