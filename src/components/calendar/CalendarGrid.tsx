@@ -65,7 +65,7 @@ const CalendarGrid = (props: StackProps) => {
         .daysInMonth();
 
       if (i === 0) {
-        daysInMonth = dayjs().date();
+        daysInMonth = dayjs().date() - 1;
       }
       const monthArray = Array.from(Array(daysInMonth).keys());
       output.push(monthArray);
@@ -101,26 +101,15 @@ const CalendarGrid = (props: StackProps) => {
             key={rowIndex}
             spacing={0}
           >
-            {row.map((day, dayIndex) =>
-              rowIndex === 0 && dayIndex === dayjs().date() - 1 ? (
-                <PulsatingCircle key={dayIndex} />
-              ) : (
-                <Day
-                  rowIndex={rowIndex}
-                  dayIndex={dayIndex}
-                  url={dataMock.url}
-                  key={dayIndex}
-                  index={
-                    rowIndex === 0
-                      ? dayIndex
-                      : rows
-                          .slice(0, rowIndex)
-                          .reduce((acc, curr) => acc + curr.length, 0) +
-                        dayIndex
-                  }
-                />
-              )
-            )}
+            {row.map((day, dayIndex) => (
+              <Day
+                rowIndex={rowIndex}
+                dayIndex={dayIndex}
+                url={dataMock.url}
+                key={dayIndex}
+              />
+            ))}
+            {rowIndex === 0 && <PulsatingCircle />}
           </SimpleGrid>
         ))}
       </Stack>

@@ -9,7 +9,40 @@ import CalendarGrid from "./CalendarGrid";
 import ColumnLabels from "./ColumnLabels";
 import RowLabels from "./RowLabels";
 
-const query = gql`
+const endpoint = "https://api.producthunt.com/v2/api/graphql";
+const headers = {
+  "content-type": "application/json",
+  Authorization: "Bearer fA3IFlvVj8OM2HbXU_dKMXwdAq0HA0Akl8nehMt3358",
+};
+
+const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: DateTime!) {
+    posts(
+      postedAfter: $dateFrom
+      postedBefore: $dateTo
+      order: VOTES
+      first: 1
+    ) {
+      nodes {
+        id
+        name
+        votesCount
+        commentsCount
+        thumbnail {
+          url
+        }
+        tagline
+        url
+        topics {
+          nodes {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productQuery = gql`
   query getProductOfTheDay($dateFrom: DateTime!, $dateTo: DateTime!) {
     posts(
       postedAfter: $dateFrom
@@ -37,24 +70,16 @@ const query = gql`
   }
 `;
 
+const options = {
+  method: "POST",
+  headers: headers,
+};
+
 const Calendar = () => {
   const { width, ref } = useElementSize();
   const [debouncedHoverCell] = useDebouncedValue(AppStore.hoveredRowCell, 1000);
   const [getUserDetailByApolloClientAPICall, { loading, error, data }] =
-    useLazyQuery(query, {
-      variables: {
-        dateFrom: new Date("2023-01-01@00:00:00:842"),
-        dateTo: new Date("2023-01-02@00:00:00:842"),
-      },
-    });
-
-  // useEffect(() => {
-  //   console.log(data, loading, error);
-  // }, [data, loading, error]);
-
-  // useEffect(() => {
-  //   getUserDetailByApolloClientAPICall();
-  // }, []);
+    useLazyQuery(productQuery);
 
   useEffect(() => {
     if (
@@ -83,12 +108,46 @@ const Calendar = () => {
   }, [debouncedHoverCell]);
 
   useEffect(() => {
+    if (
+      AppStore.cellToBeFound &&
+      !AppStore.productsHash[AppStore.cellToBeFound.index]
+    ) {
+      const dayFrom = dayjs(AppStore.cellToBeFound.date).startOf("day");
+      getUserDetailByApolloClientAPICall({
+        variables: {
+          dateFrom: dayFrom.toDate(),
+          dateTo: dayFrom.add(1, "day").toDate(),
+        },
+      });
+    }
+  }, [AppStore.cellToBeFound]);
+
+  useEffect(() => {
     if (data) {
       AppStore.productsHash[
         `${AppStore.hoveredRow} ${AppStore.hoveredRowCell}`
       ] = data.posts.nodes[0];
     }
   }, [data]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const response = await fetch(endpoint, {
+        ...options,
+        body: JSON.stringify({
+          query: graphqlQuery,
+          variables: {
+            dateFrom: dayjs().subtract(1, "day").toDate(),
+            dateTo: dayjs().toDate(),
+          },
+        }),
+      });
+      const data = await response.json();
+
+      console.log("DATA", data);
+    };
+    fetchProduct();
+  }, []);
   return (
     <Container size="md">
       <ColumnLabels mb={4} pl={width ? width + 8 : undefined} />

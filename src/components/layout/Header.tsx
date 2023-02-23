@@ -1,12 +1,11 @@
 import {
-  Anchor,
-  Center,
   Container,
   Group,
   Header as MantineHeader,
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import CellFinder from "../calendar/CellFinder";
 
 const Header = () => {
   const theme = useMantineTheme();
@@ -21,6 +20,7 @@ const Header = () => {
           >
             Product of the day
           </Title>
+          <CellFinder />
         </Group>
       </Container>
     </MantineHeader>

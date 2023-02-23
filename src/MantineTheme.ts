@@ -86,6 +86,7 @@ const MantineTheme: MantineThemeOverride = {
     },
     html: {
       scrollBehavior: "smooth",
+      scrollMarginTop: "-36px",
     },
     "::selection": {
       background: primaryColor,

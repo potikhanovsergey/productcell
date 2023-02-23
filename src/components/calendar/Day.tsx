@@ -35,7 +35,6 @@ const useStyles = createStyles(
 );
 
 interface DayProps extends UnstyledButtonProps {
-  index: number;
   url: string;
   dayIndex: number;
   rowIndex: number;
@@ -43,7 +42,7 @@ interface DayProps extends UnstyledButtonProps {
 
 const Day: FC<DayProps> = forwardRef(
   (
-    { index, dayIndex, rowIndex, url, ...props },
+    { dayIndex, rowIndex, url, ...props },
     ref: ForwardedRef<HTMLAnchorElement>
   ) => {
     const onMouseEnter = useCallback(() => {
@@ -59,6 +58,7 @@ const Day: FC<DayProps> = forwardRef(
 
     return (
       <UnstyledButton
+        data-index={`${rowIndex} ${dayIndex}`}
         component="a"
         href={product?.url}
         target="_blank"
