@@ -30,7 +30,12 @@ const CellFinder = (props: DateInputProps) => {
     }
   };
 
-  return (
+  const [shouldRender, setShouldRender] = useState(false);
+  useEffect(() => {
+    setShouldRender(true);
+  }, []);
+
+  return shouldRender ? (
     <Group>
       <DateInput
         value={date}
@@ -44,7 +49,7 @@ const CellFinder = (props: DateInputProps) => {
         Find winner
       </PrimaryButton>
     </Group>
-  );
+  ) : null;
 };
 
 export default CellFinder;
