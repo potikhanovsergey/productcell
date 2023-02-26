@@ -48,16 +48,22 @@ export const getProduct = async ({
   dateFrom: Date;
   dateTo: Date;
 }) => {
-  const response = await axios<AxiosProductResponse>(endpoint, {
-    ...options,
-    data: {
-      query: graphqlQuery,
-      variables: {
-        dateFrom,
-        dateTo,
+  try {
+    const response = await axios<AxiosProductResponse>(endpoint, {
+      ...options,
+      data: {
+        query: graphqlQuery,
+        variables: {
+          dateFrom,
+          dateTo,
+        },
       },
-    },
-  });
+    });
 
-  return response;
+    return response;
+  } catch (e: any) {
+    if (e?.response?.status === 429) {
+      return 429;
+    }
+  }
 };

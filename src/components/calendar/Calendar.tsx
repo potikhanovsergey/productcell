@@ -25,14 +25,16 @@ export const fetchProductAndSet = async ({
     .add(1, "day")
     .toDate();
   const dateTo = date.utc().tz(timezone).startOf("day").add(2, "day").toDate();
-  const { data } = await getProduct({
+  const response = await getProduct({
     dateFrom,
     dateTo,
   });
-  if (data) {
+  if (response === 429) {
+    console.log("LIMIT REACHED");
+  } else if (response?.data) {
     productsHash.set((prev) => ({
       ...prev,
-      [index]: data.data.posts.nodes,
+      [index]: response.data.data.posts.nodes,
     }));
   }
 };

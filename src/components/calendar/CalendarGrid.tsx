@@ -20,6 +20,7 @@ const CalendarGrid = (props: StackProps) => {
       }}
       label={<TooltipLabel />}
       color="blue"
+      position="top"
     >
       <Stack spacing={0} {...props}>
         <Computed>

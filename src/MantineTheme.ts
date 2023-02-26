@@ -50,9 +50,33 @@ const MantineTheme: MantineThemeOverride = {
       },
     },
     Modal: {
-      styles: (theme, params, context) => ({
+      defaultProps: {
+        shadow: "xl",
+        centered: true,
+        transitionProps: {
+          transition: {
+            in: { opacity: 1, transform: "translateY(0)" },
+            out: { opacity: 0, transform: "translateY(-30px)" },
+            common: { transformOrigin: "top" },
+            transitionProperty: "transform, opacity",
+          },
+          duration: 350,
+          timingFunction: "cubic-bezier(.4,0,.2,1)",
+        },
+      },
+      styles: (theme) => ({
         header: {
           zIndex: 100,
+        },
+        title: {
+          fontWeight: 600,
+        },
+        modal: {
+          border: "none",
+        },
+        close: {
+          "&:hover": { background: theme.fn.rgba(theme.colors.dark[5], 0.07) },
+          color: theme.colors.dark[5],
         },
       }),
     },
