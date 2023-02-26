@@ -1,4 +1,9 @@
-import { Button, ButtonProps, createStyles } from "@mantine/core";
+import {
+  Button,
+  ButtonProps,
+  createPolymorphicComponent,
+  createStyles,
+} from "@mantine/core";
 import { ComponentPropsWithoutRef } from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -29,7 +34,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const PrimaryButton = ({
+const _PrimaryButton = ({
   className,
   ...props
 }: ButtonProps & ComponentPropsWithoutRef<"button">) => {
@@ -42,5 +47,9 @@ const PrimaryButton = ({
     />
   );
 };
+
+const PrimaryButton = createPolymorphicComponent<"button", ButtonProps>(
+  _PrimaryButton
+);
 
 export default PrimaryButton;

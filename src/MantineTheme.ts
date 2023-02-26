@@ -52,7 +52,14 @@ const MantineTheme: MantineThemeOverride = {
     Modal: {
       styles: (theme, params, context) => ({
         header: {
-          zIndex: 1000,
+          zIndex: 100,
+        },
+      }),
+    },
+    ScrollArea: {
+      styles: (theme, params, context) => ({
+        scrollbar: {
+          zIndex: 101,
         },
       }),
     },

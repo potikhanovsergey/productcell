@@ -2,16 +2,15 @@ import { drawerDetails } from "@/store/LegendStore";
 import { observer, Show, Switch } from "@legendapp/state/react";
 import {
   Drawer,
-  Stack,
   Title,
   Text,
   Paper,
   Image,
   Group,
-  Badge,
   Box,
   Button,
 } from "@mantine/core";
+import PrimaryButton from "../PrimaryButton";
 import FirstBadge from "../producthuntIcons/FirstBadge";
 import SecondBadge from "../producthuntIcons/SecondBadge";
 import ThirdBadge from "../producthuntIcons/ThirdBadge";
@@ -41,10 +40,11 @@ const DetailsDrawer = () => {
         <Show if={details.products}>
           {() =>
             details.products!.map((product, index) => (
-              <Paper key={product.id} withBorder p="sm" mb="md" shadow="md">
+              <Paper key={product.id} withBorder p="sm" mb="md">
                 <Group noWrap align="flex-start" mb="xs">
                   <a href={product.url} target="_blank" rel="noreferrer">
                     <Image
+                      radius="sm"
                       width={60}
                       height={60}
                       src={`${product.thumbnail.url}&width=100`}
@@ -74,6 +74,7 @@ const DetailsDrawer = () => {
                 <Group spacing={4} mb={4}>
                   {product.topics.nodes.map((t) => (
                     <BadgeLink
+                      size="xs"
                       key={t.name}
                       href={`https://producthunt.com/search?q=${t.name}`}
                     >
@@ -96,6 +97,20 @@ const DetailsDrawer = () => {
               </Paper>
             ))
           }
+        </Show>
+        <Show if={details.date}>
+          {() => (
+            <PrimaryButton
+              fullWidth
+              target="_blank"
+              component="a"
+              href={`https://producthunt.com/time-travel/${details.date?.format(
+                "YYYY/MM/DD"
+              )}`}
+            >
+              Product Hunt time travel
+            </PrimaryButton>
+          )}
         </Show>
       </>
     </Drawer>

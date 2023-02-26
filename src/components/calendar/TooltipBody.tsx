@@ -1,9 +1,6 @@
-import { hoveredProduct, hoveredCellDate } from "@/store/LegendStore";
-import { Group, Box, Stack, Badge, Text, useMantineTheme } from "@mantine/core";
-import { IconClick, IconExternalLink } from "@tabler/icons-react";
-import CommentIcon from "../producthuntIcons/CommentIcon";
-import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
-import Image from "next/image";
+import { hoveredProduct } from "@/store/LegendStore";
+import { Group, Box, Stack, Image, Text, useMantineTheme } from "@mantine/core";
+import { IconClick } from "@tabler/icons-react";
 import { observer, Show } from "@legendapp/state/react";
 import TooltipBadges from "./TooltipBadges";
 import HoveredCellDate from "./HoveredCellDate";
@@ -18,6 +15,7 @@ const TooltipBody = () => {
       <Group noWrap w="100%" align="flex-start">
         <Box sx={{ borderRadius: theme.radius.sm }}>
           <Image
+            radius="sm"
             width={48}
             height={48}
             src={`${product.thumbnail.url}&width=100`}
