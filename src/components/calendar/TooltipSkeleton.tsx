@@ -39,11 +39,6 @@ const TooltipSkeleton = () => {
   const date = hoveredCellDate.get();
   return (
     <>
-      <Group mb={4} noWrap position="apart">
-        <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
-          <Box mt={-2} component={IconClick} size={16} /> Click to load winner
-        </Text>
-      </Group>
       <Group noWrap w="100%" align="flex-start">
         <Skeleton width={48} miw={48} height={48} radius="sm" />
         <Stack spacing={4} w="100%">
@@ -70,6 +65,9 @@ const TooltipSkeleton = () => {
         <Show if={date}>
           <HoveredCellDate />
         </Show>
+        <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
+          <Box mt={-2} component={IconClick} size={16} /> Click to load winner
+        </Text>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { hoveredProduct, hoveredCellDate } from "@/store/LegendStore";
 import { Group, Box, Stack, Badge, Text, useMantineTheme } from "@mantine/core";
-import { IconExternalLink } from "@tabler/icons-react";
+import { IconClick, IconExternalLink } from "@tabler/icons-react";
 import CommentIcon from "../producthuntIcons/CommentIcon";
 import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
 import Image from "next/image";
@@ -46,9 +46,8 @@ const TooltipBody = () => {
         <Show if={product}>
           <HoveredCellDate />
         </Show>
-        <Text color="dimmed" size="xs">
-          <Box component={IconExternalLink} mb={-1} size={12} /> Click to open
-          launch page
+        <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
+          <Box mt={-2} component={IconClick} size={16} /> Click to see details
         </Text>
       </div>
     </>
