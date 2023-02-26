@@ -8,7 +8,7 @@ import { FC, ForwardedRef, forwardRef } from "react";
 
 import { ProductHuntApiResponse } from "@/store/types";
 import {
-  drawerOpened,
+  drawerDetails,
   hoveredRow,
   hoveredRowCell,
   productsHash,
@@ -17,6 +17,7 @@ import { observer } from "@legendapp/state/react";
 import { batch } from "@legendapp/state";
 import dayjs from "dayjs";
 import { fetchProductAndSet } from "./Calendar";
+import { getDateByIndexes } from "@/helpers";
 
 const useStyles = createStyles(
   (theme, { product }: { product: ProductHuntApiResponse }) => ({
@@ -61,15 +62,18 @@ const Cell: FC<DayProps> = forwardRef(
 
     const onClick = () => {
       const index = `${rowIndex} ${cellIndex}`;
-      if (productsHash.get()[index]) {
+      const products = productsHash.get()[index];
+      const date = getDateByIndexes({ rowIndex, cellIndex });
+      if (products) {
         batch(() => {
-          drawerOpened.set(true);
+          drawerDetails.opened.set(true);
+          drawerDetails.set({
+            opened: true,
+            products,
+            date,
+          });
         });
       } else {
-        const date = dayjs()
-          .startOf("month")
-          .subtract(rowIndex, "month")
-          .add(cellIndex, "day");
         fetchProductAndSet({
           index: `${rowIndex} ${cellIndex}`,
           date,
@@ -77,7 +81,7 @@ const Cell: FC<DayProps> = forwardRef(
       }
     };
     const index = `${rowIndex} ${cellIndex}`;
-    const product = productsHash.get()[index];
+    const product = productsHash.get()[index]?.[0];
     const { classes } = useStyles({ product });
 
     return (
@@ -91,13 +95,6 @@ const Cell: FC<DayProps> = forwardRef(
         {...props}
       />
     );
-    {
-      /* <Box className={classes.box} /> */
-    }
-    {
-      /* </UnstyledButton> */
-    }
-    // );
   }
 );
 

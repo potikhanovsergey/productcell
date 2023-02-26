@@ -1,16 +1,9 @@
 import { getProduct } from "@/queries/getProduct";
-import {
-  drawerOpened,
-  hoveredProduct,
-  hoveredRow,
-  hoveredRowCell,
-  productsHash,
-} from "@/store/LegendStore";
+import { productsHash } from "@/store/LegendStore";
 import { observer } from "@legendapp/state/react";
-import { Box, Container, Drawer, Group } from "@mantine/core";
-import { useDebouncedValue, useElementSize } from "@mantine/hooks";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect } from "react";
+import { Box, Container } from "@mantine/core";
+import { useElementSize } from "@mantine/hooks";
+import { Dayjs } from "dayjs";
 import CalendarGrid from "./CalendarGrid";
 import ColumnLabels from "./ColumnLabels";
 import DetailsDrawer from "./DetailsDrawer";
@@ -39,7 +32,7 @@ export const fetchProductAndSet = async ({
   if (data) {
     productsHash.set((prev) => ({
       ...prev,
-      [index]: data.data.posts.nodes[0],
+      [index]: data.data.posts.nodes,
     }));
   }
 };

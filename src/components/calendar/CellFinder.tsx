@@ -34,7 +34,7 @@ const CellFinder = (props: DateInputProps) => {
     if (data) {
       productsHash.set((prev) => ({
         ...prev,
-        [index]: data.data.posts.nodes[0],
+        [index]: data.data.posts.nodes,
       }));
     }
   };

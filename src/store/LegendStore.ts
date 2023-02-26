@@ -1,19 +1,24 @@
-import dayjs from "dayjs";
-import { ProductHash } from "./types";
+import dayjs, { Dayjs } from "dayjs";
+import { ProductHash, ProductHuntApiResponse } from "./types";
 import { computed, observable } from "@legendapp/state";
 
 const hoveredRow = observable(null as number | null);
 const hoveredRowCell = observable(null as number | null);
 const productsHash = observable({} as ProductHash);
 const minDate = dayjs().subtract(35, "month").endOf("month");
-const drawerOpened = observable(false);
+
+const drawerDetails = observable({
+  opened: false,
+  products: null as ProductHuntApiResponse[] | null,
+  date: null as Dayjs | null,
+});
 
 const hoveredProduct = computed(() => {
   const hoveredRowValue = hoveredRow.get();
   const hoveredRowCellValue = hoveredRowCell.get();
   const index = `${hoveredRowValue} ${hoveredRowCellValue}`;
   const produchHashValue = productsHash.get();
-  return produchHashValue[index];
+  return produchHashValue[index]?.[0];
 });
 
 const hoveredCellDate = computed(() => {
@@ -34,5 +39,5 @@ export {
   hoveredCellDate,
   minDate,
   hoveredProduct,
-  drawerOpened,
+  drawerDetails,
 };
