@@ -11,6 +11,7 @@ export interface ProductHuntApiResponse {
   topics: {
     nodes: { name: string }[];
   };
+  description: string;
 }
 
 export interface AxiosProductResponse {

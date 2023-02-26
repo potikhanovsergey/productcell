@@ -25,6 +25,7 @@ const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: Da
         name
         votesCount
         commentsCount
+        description
         thumbnail {
           url
         }

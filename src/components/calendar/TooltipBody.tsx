@@ -7,6 +7,7 @@ import Image from "next/image";
 import { observer, Show } from "@legendapp/state/react";
 import TooltipBadges from "./TooltipBadges";
 import HoveredCellDate from "./HoveredCellDate";
+import Stats from "./Stats";
 
 const TooltipBody = () => {
   const theme = useMantineTheme();
@@ -26,16 +27,7 @@ const TooltipBody = () => {
 
         <Stack spacing={0}>
           <Text weight="bold">{product.name}</Text>
-          <Group spacing="xs" w="100%" noWrap>
-            <Group spacing={4} noWrap>
-              <UpvoteIcon w={12} h={12} c={theme.colors.green[5]} />
-              <Text size="xs">{product.votesCount}</Text>
-            </Group>
-            <Group spacing={4} noWrap>
-              <CommentIcon c={theme.colors.gray[3]} />
-              <Text size="xs">{product.commentsCount}</Text>
-            </Group>
-          </Group>
+          <Stats product={product} />
         </Stack>
       </Group>
       <Text size="xs">{product.tagline}</Text>

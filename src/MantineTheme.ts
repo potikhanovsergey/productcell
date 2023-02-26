@@ -49,6 +49,13 @@ const MantineTheme: MantineThemeOverride = {
         },
       },
     },
+    Modal: {
+      styles: (theme, params, context) => ({
+        header: {
+          zIndex: 1000,
+        },
+      }),
+    },
     TooltipFloating: {
       styles: (theme) => ({
         tooltip: {
