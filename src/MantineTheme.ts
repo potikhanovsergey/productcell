@@ -26,7 +26,8 @@ const MantineTheme: MantineThemeOverride = {
   components: {
     Loader: {
       defaultProps: {
-        color: "dark",
+        color: "orange",
+        size: "xs",
       },
     },
     Button: {
@@ -66,6 +67,11 @@ const MantineTheme: MantineThemeOverride = {
     },
     Tooltip: {
       defaultProps: {
+        events: {
+          touch: true,
+          hover: true,
+          focus: true,
+        },
         transitionProps: {
           transition: "pop",
           duration: 200,

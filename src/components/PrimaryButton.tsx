@@ -1,6 +1,5 @@
 import { Button, ButtonProps, createStyles } from "@mantine/core";
 import { ComponentPropsWithoutRef } from "react";
-import { pulseOrange } from "./calendar/PulsatingCircle";
 
 const useStyles = createStyles((theme) => ({
   button: {

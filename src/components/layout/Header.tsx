@@ -2,11 +2,16 @@ import {
   Container,
   Group,
   Header as MantineHeader,
-  Title,
+  Loader,
   useMantineTheme,
 } from "@mantine/core";
-import CellFinder from "../calendar/CellFinder";
+import dynamic from "next/dynamic";
 import Logo from "../Logo";
+
+const CellFinder = dynamic(() => import("../calendar/CellFinder"), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
 const Header = () => {
   const theme = useMantineTheme();

@@ -1,7 +1,7 @@
-import { Box, rem, Stack, Text, useMantineTheme } from "@mantine/core";
+import { monthsArray } from "@/pages/_app";
+import { rem, Stack, Text, useMantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
-import { ForwardedRef, forwardRef, useEffect } from "react";
-import { monthsArray } from "./CalendarGrid";
+import { ForwardedRef, forwardRef } from "react";
 
 const RowLabels = forwardRef((_, ref: ForwardedRef<HTMLDivElement>) => {
   const theme = useMantineTheme();

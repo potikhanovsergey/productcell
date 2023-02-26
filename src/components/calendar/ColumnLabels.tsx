@@ -1,6 +1,6 @@
+import { daysArray } from "@/pages/_app";
 import { Group, Stack, StackProps, Text, useMantineTheme } from "@mantine/core";
 import Arrow from "./Arrow";
-import { daysArray } from "./CalendarGrid";
 
 const ColumnLabels = (props: StackProps) => {
   const theme = useMantineTheme();

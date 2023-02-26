@@ -1,4 +1,10 @@
-import { AppStore } from "@/store/AppStore";
+import { getProduct } from "@/queries/getProduct";
+import {
+  hoveredRow,
+  hoveredRowCell,
+  minDate,
+  productsHash,
+} from "@/store/LegendStore";
 import { Group } from "@mantine/core";
 import { DateInputProps, DateInput } from "@mantine/dates";
 import dayjs, { Dayjs } from "dayjs";
@@ -14,6 +20,36 @@ export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
 
 const CellFinder = (props: DateInputProps) => {
   const [date, setDate] = useState<Date | null>(null);
+  const fetchProductAndSet = async ({
+    index,
+    date,
+  }: {
+    index: string;
+    date: Dayjs;
+  }) => {
+    const { data } = await getProduct({
+      dateFrom: date.utc().startOf("day").toDate(),
+      dateTo: date.utc().startOf("day").add(1, "day").toDate(),
+    });
+    if (data) {
+      productsHash.set((prev) => ({
+        ...prev,
+        [index]: data.data.posts.nodes[0],
+      }));
+    }
+  };
+  const fetchProduct = async ({
+    index,
+    date,
+  }: {
+    index: string;
+    date: Date;
+  }) => {
+    if (!productsHash.get()[index]) {
+      fetchProductAndSet({ index, date: dayjs(date) });
+    }
+  };
+
   const findWinner = () => {
     if (date) {
       const indexes = getIdByDate({ date });
@@ -22,26 +58,19 @@ const CellFinder = (props: DateInputProps) => {
         `[data-index="${index}"]`
       );
       if (cell) {
-        AppStore.setHoveredRow(indexes.rowIndex);
-        AppStore.setHoveredRowCell(indexes.dayIndex);
         cell.scrollIntoView({ block: "center", behavior: "smooth" });
-        AppStore.setCellToBeFound({ index, date });
+        fetchProduct({ index, date });
       }
     }
   };
 
-  const [shouldRender, setShouldRender] = useState(false);
-  useEffect(() => {
-    setShouldRender(true);
-  }, []);
-
-  return shouldRender ? (
+  return (
     <Group>
       <DateInput
         value={date}
         onChange={setDate}
         size="xs"
-        minDate={AppStore.minDate.toDate()}
+        minDate={minDate.toDate()}
         maxDate={dayjs().subtract(1, "day").toDate()}
         placeholder="Launch date"
       />
@@ -49,7 +78,7 @@ const CellFinder = (props: DateInputProps) => {
         Find winner
       </PrimaryButton>
     </Group>
-  ) : null;
+  );
 };
 
 export default CellFinder;
