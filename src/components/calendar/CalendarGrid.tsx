@@ -1,11 +1,11 @@
-import { Stack, StackProps, Tooltip } from "@mantine/core";
+import { Box, BoxProps, Stack, StackProps, Tooltip } from "@mantine/core";
 import TooltipLabel from "./TooltipLabel";
 import { Computed, observer, useComputed } from "@legendapp/state/react";
 import { hoveredRowCell } from "@/store/LegendStore";
 import CalendarRow from "./CalendarRow";
 import { rows } from "@/pages/_app";
 
-const CalendarGrid = (props: StackProps) => {
+const CalendarGrid = (props: BoxProps) => {
   const visible = useComputed(() => hoveredRowCell.get() !== null);
 
   return (
@@ -22,7 +22,11 @@ const CalendarGrid = (props: StackProps) => {
       color="blue"
       position="top"
     >
-      <Stack spacing={0} {...props}>
+      <Box
+        display="grid"
+        sx={{ gridTemplateColumns: "1fr", gridAutoRows: "1fr" }}
+        {...props}
+      >
         <Computed>
           {() =>
             rows.map((cells, rowIndex) => (
@@ -30,7 +34,7 @@ const CalendarGrid = (props: StackProps) => {
             ))
           }
         </Computed>
-      </Stack>
+      </Box>
     </Tooltip.Floating>
   );
 };
