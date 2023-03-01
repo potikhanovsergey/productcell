@@ -13,13 +13,14 @@ import {
 } from "@mantine/core";
 import { Dayjs } from "dayjs";
 import CalendarGrid from "./CalendarGrid";
-import ColumnLabels from "./ColumnLabels";
-import RowLabels from "./RowLabels";
 import { StickyContainer, Sticky } from "react-sticky";
 import { useState } from "react";
 import Arrow from "./Arrow";
 import dynamic from "next/dynamic";
+
 const DetailsDrawer = dynamic(() => import("./DetailsDrawer"), { ssr: false });
+const ColumnLabels = dynamic(() => import("./ColumnLabels"), { ssr: false });
+const RowLabels = dynamic(() => import("./RowLabels"), { ssr: false });
 
 const timezone = "America/Vancouver";
 
