@@ -1,16 +1,10 @@
 import { getProduct } from "@/queries/getProduct";
-import {
-  hoveredRow,
-  hoveredRowCell,
-  minDate,
-  productsHash,
-} from "@/store/LegendStore";
+import { minDate, productsHash } from "@/store/LegendStore";
 import { ActionIcon, Group } from "@mantine/core";
 import { DateInputProps, DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
-import PrimaryButton from "../PrimaryButton";
+import { useState } from "react";
 
 export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
   const rowIndex = dayjs()

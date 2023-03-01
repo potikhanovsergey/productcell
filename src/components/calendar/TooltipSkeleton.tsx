@@ -12,26 +12,12 @@ import {
   Box,
 } from "@mantine/core";
 import { IconClick } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
 import CommentIcon from "../producthuntIcons/CommentIcon";
 import UpvoteIcon from "../producthuntIcons/UpvoteIcon";
-import HoveredCellDate from "./HoveredCellDate";
+import dynamic from "next/dynamic";
 
-const ProgressBar = observer(() => {
-  const [completed, setCompleted] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCompleted((prev) => prev + 20);
-    }, 100);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  hoveredRowCell.onChange(() => setCompleted(0));
-
-  return <Progress size="sm" color="orange" value={completed} />;
+const HoveredCellDate = dynamic(() => import("./HoveredCellDate"), {
+  ssr: false,
 });
 
 const TooltipSkeleton = () => {
@@ -62,9 +48,7 @@ const TooltipSkeleton = () => {
         ))}
       </Group>
       <div>
-        <Show if={date}>
-          <HoveredCellDate />
-        </Show>
+        <Show if={date}>{() => <HoveredCellDate />}</Show>
         <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
           <Box mt={-2} component={IconClick} size={16} /> Click to load the day
           info

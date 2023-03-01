@@ -3,8 +3,12 @@ import { Group, Box, Stack, Image, Text, useMantineTheme } from "@mantine/core";
 import { IconClick } from "@tabler/icons-react";
 import { observer, Show } from "@legendapp/state/react";
 import TooltipBadges from "./TooltipBadges";
-import HoveredCellDate from "./HoveredCellDate";
 import Stats from "./Stats";
+import dynamic from "next/dynamic";
+
+const HoveredCellDate = dynamic(() => import("./HoveredCellDate"), {
+  ssr: false,
+});
 
 const TooltipBody = () => {
   const theme = useMantineTheme();
@@ -33,9 +37,7 @@ const TooltipBody = () => {
         <TooltipBadges />
       </Group>
       <div>
-        <Show if={product}>
-          <HoveredCellDate />
-        </Show>
+        <Show if={product}>{() => <HoveredCellDate />}</Show>
         <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
           <Box mt={-2} component={IconClick} size={16} />
           Click on the cell to see the details
