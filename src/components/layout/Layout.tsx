@@ -9,7 +9,12 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <AppShell header={<Header />} footer={<Footer />} fixed={false}>
+    <AppShell
+      header={<Header />}
+      footer={<Footer />}
+      styles={{ main: { paddingLeft: 0, paddingRight: 0 } }}
+      fixed={false}
+    >
       {children}
     </AppShell>
   );

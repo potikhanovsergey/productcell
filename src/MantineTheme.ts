@@ -52,7 +52,6 @@ const MantineTheme: MantineThemeOverride = {
     Modal: {
       defaultProps: {
         shadow: "xl",
-        centered: true,
         transitionProps: {
           transition: {
             in: { opacity: 1, transform: "translateY(0)" },

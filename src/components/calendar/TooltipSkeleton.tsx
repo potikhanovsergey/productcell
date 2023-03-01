@@ -66,7 +66,8 @@ const TooltipSkeleton = () => {
           <HoveredCellDate />
         </Show>
         <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
-          <Box mt={-2} component={IconClick} size={16} /> Click to load winner
+          <Box mt={-2} component={IconClick} size={16} /> Click to load the day
+          info
         </Text>
       </div>
     </>

@@ -24,7 +24,12 @@ const DetailsDrawer = () => {
     <Drawer
       opened={details.opened}
       onClose={onClose}
-      title={<Title order={2}>Winner details</Title>}
+      styles={{
+        title: {
+          fontSize: 32,
+        },
+      }}
+      title="Day details"
       padding="xl"
       size="md"
       position="right"
@@ -37,6 +42,9 @@ const DetailsDrawer = () => {
             </Text>
           )}
         </Show>
+        <Text color="dimmed" size="sm" mb={4}>
+          Sorted by the amount of upvotes at the moment
+        </Text>
         <Show if={details.products}>
           {() =>
             details.products!.map((product, index) => (
@@ -58,14 +66,32 @@ const DetailsDrawer = () => {
                       </Title>
                       <Stats product={product} />
                     </Box>
-                    <Switch value={index}>
-                      {{
-                        0: () => <FirstBadge miw={80} w={80} />,
-                        1: () => <SecondBadge miw={80} w={80} />,
-                        2: () => <ThirdBadge miw={80} w={80} />,
-                        default: () => null,
-                      }}
-                    </Switch>
+                    <Box sx={{ flexShrink: 0 }}>
+                      <Switch value={index}>
+                        {{
+                          0: () => (
+                            <Text size={40} color="orange" weight="bold">
+                              1
+                            </Text>
+                          ),
+                          1: () => (
+                            <Text size={40} weight="bold" color="blue">
+                              2
+                            </Text>
+                          ),
+                          2: () => (
+                            <Text size={40} weight="bold" color="green">
+                              3
+                            </Text>
+                          ),
+                          default: () => (
+                            <Text size={40} color="gray" weight="bold">
+                              {index + 1}
+                            </Text>
+                          ),
+                        }}
+                      </Switch>
+                    </Box>
                   </Group>
                 </Group>
                 <Text weight={500} color="dimmed" size="sm" mb={4}>

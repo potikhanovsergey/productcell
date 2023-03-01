@@ -1,13 +1,24 @@
 import { getProduct } from "@/queries/getProduct";
 import { productsHash } from "@/store/LegendStore";
 import { observer } from "@legendapp/state/react";
-import { Box, Container } from "@mantine/core";
-import { useElementSize } from "@mantine/hooks";
+import {
+  Box,
+  Container,
+  Group,
+  rem,
+  ScrollArea,
+  Text,
+  Stack,
+  useMantineTheme,
+} from "@mantine/core";
 import { Dayjs } from "dayjs";
 import CalendarGrid from "./CalendarGrid";
 import ColumnLabels from "./ColumnLabels";
 import DetailsDrawer from "./DetailsDrawer";
 import RowLabels from "./RowLabels";
+import { StickyContainer, Sticky } from "react-sticky";
+import { useState } from "react";
+import Arrow from "./Arrow";
 
 const timezone = "America/Vancouver";
 
@@ -30,7 +41,6 @@ export const fetchProductAndSet = async ({
     dateTo,
   });
   if (response === 429) {
-    console.log("LIMIT REACHED");
   } else if (response?.data) {
     productsHash.set((prev) => ({
       ...prev,
@@ -40,18 +50,63 @@ export const fetchProductAndSet = async ({
 };
 
 const Calendar = () => {
-  const { width, ref } = useElementSize();
+  const theme = useMantineTheme();
+  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
 
   return (
-    <Container size="md">
-      <ColumnLabels mb={4} pl={width ? width + 8 : undefined} />
-      <Box
-        pos="relative"
-        sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}
-      >
-        <RowLabels ref={ref} />
-        <CalendarGrid sx={{ flex: 1 }} />
-      </Box>
+    <Container size="md" px={0}>
+      <ScrollArea type="never" onScrollPositionChange={onScrollPositionChange}>
+        <StickyContainer>
+          <Box
+            pos="relative"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "minmax(50px, auto) 1fr",
+            }}
+          >
+            <Box />
+            <Stack>
+              <Group>
+                <Text>Days</Text>
+                <Arrow />
+              </Group>
+              <Sticky>
+                {({
+                  style,
+
+                  // the following are also available but unused in this example
+                  isSticky,
+                  wasSticky,
+                  distanceFromTop,
+                  distanceFromBottom,
+                  calculatedHeight,
+                }) => (
+                  <Box
+                    style={style}
+                    sx={{
+                      background: theme.white,
+                      zIndex: 10,
+                      left: `unset !important`,
+                      [`@media (max-width: 960px)`]: {
+                        left: isSticky
+                          ? `calc(50px + -1 * ${rem(
+                              scrollPosition.x
+                            )}) !important`
+                          : undefined,
+                      },
+                    }}
+                  >
+                    <ColumnLabels mb={4} />
+                  </Box>
+                )}
+              </Sticky>
+            </Stack>
+
+            <RowLabels pr={10} />
+            <CalendarGrid />
+          </Box>
+        </StickyContainer>
+      </ScrollArea>
       <DetailsDrawer />
     </Container>
   );

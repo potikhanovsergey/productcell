@@ -5,14 +5,17 @@ import {
   minDate,
   productsHash,
 } from "@/store/LegendStore";
-import { Group } from "@mantine/core";
+import { ActionIcon, Group } from "@mantine/core";
 import { DateInputProps, DateInput } from "@mantine/dates";
+import { IconSearch } from "@tabler/icons-react";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../PrimaryButton";
 
 export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
-  const rowIndex = dayjs().startOf("month").diff(date, "month");
+  const rowIndex = dayjs()
+    .startOf("month")
+    .diff(dayjs(date).startOf("month"), "month");
   const dayIndex = dayjs(date).date() - 1;
 
   return { dayIndex, rowIndex };
@@ -27,14 +30,15 @@ const CellFinder = (props: DateInputProps) => {
     index: string;
     date: Dayjs;
   }) => {
-    const { data } = await getProduct({
+    const response = await getProduct({
       dateFrom: date.utc().startOf("day").toDate(),
       dateTo: date.utc().startOf("day").add(1, "day").toDate(),
     });
-    if (data) {
+    if (response === 429) {
+    } else if (response?.data) {
       productsHash.set((prev) => ({
         ...prev,
-        [index]: data.data.posts.nodes,
+        [index]: response.data.data.posts.nodes,
       }));
     }
   };
@@ -50,7 +54,7 @@ const CellFinder = (props: DateInputProps) => {
     }
   };
 
-  const findWinner = () => {
+  const findCell = () => {
     if (date) {
       const indexes = getIdByDate({ date });
       const index = `${indexes.rowIndex} ${indexes.dayIndex}`;
@@ -65,18 +69,24 @@ const CellFinder = (props: DateInputProps) => {
   };
 
   return (
-    <Group>
+    <Group spacing="xs">
       <DateInput
         value={date}
         onChange={setDate}
         size="xs"
         minDate={minDate.toDate()}
         maxDate={dayjs().subtract(1, "day").toDate()}
-        placeholder="Launch date"
+        placeholder="Enter date"
       />
-      <PrimaryButton disabled={!date} size="xs" onClick={findWinner}>
-        Find winner
-      </PrimaryButton>
+      <ActionIcon
+        variant="filled"
+        disabled={!date}
+        color="orange"
+        size={30}
+        onClick={findCell}
+      >
+        <IconSearch size="66%" />
+      </ActionIcon>
     </Group>
   );
 };

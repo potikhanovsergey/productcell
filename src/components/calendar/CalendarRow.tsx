@@ -13,10 +13,11 @@ import {
 import { IconTimeline } from "@tabler/icons-react";
 import Cell from "./Cell";
 import PulsatingCircle from "./PulsatingCircle";
-import { modals } from "@mantine/modals";
 
 const useStyles = createStyles((theme) => ({
   row: {
+    display: "grid",
+    gridTemplateColumns: "repeat(31, minmax(25px, auto))",
     [`&:hover .${getStylesRef("stats")}`]: {
       opacity: 1,
     },
@@ -39,24 +40,8 @@ const CalendarRow = ({
   cells: number[];
 }) => {
   const { classes } = useStyles();
-  const openStatsModal = () => {
-    modals.open({
-      title: "Month's Statistics",
-      centered: true,
-      returnFocus: false,
-      lockScroll: false,
-      size: "xl",
-      children: <>...</>,
-    });
-  };
   return (
-    <SimpleGrid
-      className={classes.row}
-      cols={31}
-      key={rowIndex}
-      spacing={0}
-      pos="relative"
-    >
+    <Box className={classes.row} key={rowIndex} pos="relative">
       <Computed>
         {() =>
           cells.map((_, cellIndex) => (
@@ -67,19 +52,7 @@ const CalendarRow = ({
       <Show if={rowIndex === 0}>
         <PulsatingCircle />
       </Show>
-      <Tooltip label="See month's stats">
-        <ActionIcon
-          onClick={openStatsModal}
-          className={classes.stats}
-          size="sm"
-          variant="transparent"
-          pos="absolute"
-          right={-28}
-        >
-          <IconTimeline />
-        </ActionIcon>
-      </Tooltip>
-    </SimpleGrid>
+    </Box>
   );
 };
 

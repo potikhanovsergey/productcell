@@ -7,7 +7,6 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 import { enableLegendStateReact } from "@legendapp/state/react";
-import { ModalsProvider } from "@mantine/modals";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -43,10 +42,8 @@ export default function App(props: AppProps) {
         />
       </Head>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
-        <ModalsProvider>
-          <Component {...pageProps} />
-          <Analytics />
-        </ModalsProvider>
+        <Component {...pageProps} />
+        <Analytics />
       </MantineProvider>
     </>
   );

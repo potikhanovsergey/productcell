@@ -17,8 +17,8 @@ const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: Da
     posts(
       postedAfter: $dateFrom
       postedBefore: $dateTo
-      order: RANKING
-      first: 3
+      order: VOTES
+      first: 10
     ) {
       nodes {
         id

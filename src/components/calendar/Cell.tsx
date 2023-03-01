@@ -15,7 +15,6 @@ import {
 } from "@/store/LegendStore";
 import { observer } from "@legendapp/state/react";
 import { batch } from "@legendapp/state";
-import dayjs from "dayjs";
 import { fetchProductAndSet } from "./Calendar";
 import { getDateByIndexes } from "@/helpers";
 
@@ -57,7 +56,7 @@ const Cell: FC<DayProps> = forwardRef(
       });
     };
     const onMouseLeave = () => {
-      hoveredRowCell.set(null);
+      hoveredRowCell.set("null");
     };
 
     const onClick = () => {

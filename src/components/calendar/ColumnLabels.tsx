@@ -16,10 +16,6 @@ const ColumnLabels = (props: StackProps) => {
       }}
       {...props}
     >
-      <Group>
-        <Text>Days</Text>
-        <Arrow />
-      </Group>
       <Group grow noWrap spacing={4} pos="relative">
         {daysArray.map((_, column) => (
           <Text align="center" key={column} size={10}>

@@ -1,42 +1,33 @@
 import { monthsArray } from "@/pages/_app";
-import { rem, Stack, Text, useMantineTheme } from "@mantine/core";
+import { rem, Stack, StackProps, Text, useMantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
 import { ForwardedRef, forwardRef } from "react";
 
-const RowLabels = forwardRef((_, ref: ForwardedRef<HTMLDivElement>) => {
+const RowLabels = (props: StackProps) => {
   const theme = useMantineTheme();
   return (
     <Stack
-      ref={ref}
       sx={{
         pointerEvents: "none",
         userSelect: "none",
+        position: "sticky",
+        left: 0,
+        background: theme.white,
+        zIndex: 10,
       }}
       spacing={0}
       justify="space-between"
       h="100%"
+      {...props}
     >
       {monthsArray.map((_, row) => (
-        <Text
-          key={row}
-          ta="right"
-          w="100%"
-          size={10}
-          sx={{
-            [`@media (max-width: ${theme.breakpoints.md})`]: {
-              fontSize: rem(8),
-            },
-            [`@media (max-width: ${theme.breakpoints.xs})`]: {
-              fontSize: rem(4),
-            },
-          }}
-        >
+        <Text key={row} ta="right" w="100%" size={8}>
           {dayjs().subtract(row, "month").format("YYYY MMM")}
         </Text>
       ))}
     </Stack>
   );
-});
+};
 
 RowLabels.displayName = "RowLabels";
 
