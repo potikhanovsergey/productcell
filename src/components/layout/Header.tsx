@@ -14,13 +14,11 @@ const CellFinder = dynamic(() => import("../calendar/CellFinder"), {
 });
 
 const Header = () => {
-  const theme = useMantineTheme();
   return (
     <MantineHeader height={80}>
       <Container size="xl" h="100%">
         <Group h="100%" position="apart">
           <Logo h={48} />
-
           <CellFinder />
         </Group>
       </Container>

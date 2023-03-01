@@ -1,16 +1,5 @@
-import { Computed, observer, Show } from "@legendapp/state/react";
-import {
-  ActionIcon,
-  Box,
-  createStyles,
-  SimpleGrid,
-  getStylesRef,
-  useMantineTheme,
-  Tooltip,
-  Button,
-  TextInput,
-} from "@mantine/core";
-import { IconTimeline } from "@tabler/icons-react";
+import { observer, Show } from "@legendapp/state/react";
+import { Box, createStyles, getStylesRef } from "@mantine/core";
 import Cell from "./Cell";
 import PulsatingCircle from "./PulsatingCircle";
 
@@ -42,16 +31,10 @@ const CalendarRow = ({
   const { classes } = useStyles();
   return (
     <Box className={classes.row} key={rowIndex} pos="relative">
-      <Computed>
-        {() =>
-          cells.map((_, cellIndex) => (
-            <Cell rowIndex={rowIndex} cellIndex={cellIndex} key={cellIndex} />
-          ))
-        }
-      </Computed>
-      <Show if={rowIndex === 0}>
-        <PulsatingCircle />
-      </Show>
+      {cells.map((_, cellIndex) => (
+        <Cell rowIndex={rowIndex} cellIndex={cellIndex} key={cellIndex} />
+      ))}
+      {rowIndex === 0 && <PulsatingCircle />}
     </Box>
   );
 };

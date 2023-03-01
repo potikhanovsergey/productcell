@@ -11,9 +11,6 @@ import {
   Button,
 } from "@mantine/core";
 import PrimaryButton from "../PrimaryButton";
-import FirstBadge from "../producthuntIcons/FirstBadge";
-import SecondBadge from "../producthuntIcons/SecondBadge";
-import ThirdBadge from "../producthuntIcons/ThirdBadge";
 import BadgeLink from "./BadgeLink";
 import Stats from "./Stats";
 

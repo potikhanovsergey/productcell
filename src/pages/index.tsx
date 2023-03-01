@@ -1,6 +1,5 @@
 import Calendar from "@/components/calendar/Calendar";
 import Layout from "@/components/layout/Layout";
-import { observer } from "@legendapp/state/react";
 import { Box, Container, Title, useMantineTheme, Text } from "@mantine/core";
 
 const IndexPage = () => {
@@ -45,4 +44,4 @@ const IndexPage = () => {
   );
 };
 
-export default observer(IndexPage);
+export default IndexPage;

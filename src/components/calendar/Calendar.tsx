@@ -14,11 +14,12 @@ import {
 import { Dayjs } from "dayjs";
 import CalendarGrid from "./CalendarGrid";
 import ColumnLabels from "./ColumnLabels";
-import DetailsDrawer from "./DetailsDrawer";
 import RowLabels from "./RowLabels";
 import { StickyContainer, Sticky } from "react-sticky";
 import { useState } from "react";
 import Arrow from "./Arrow";
+import dynamic from "next/dynamic";
+const DetailsDrawer = dynamic(() => import("./DetailsDrawer"), { ssr: false });
 
 const timezone = "America/Vancouver";
 
@@ -71,16 +72,7 @@ const Calendar = () => {
                 <Arrow />
               </Group>
               <Sticky>
-                {({
-                  style,
-
-                  // the following are also available but unused in this example
-                  isSticky,
-                  wasSticky,
-                  distanceFromTop,
-                  distanceFromBottom,
-                  calculatedHeight,
-                }) => (
+                {({ style, isSticky }) => (
                   <Box
                     style={style}
                     sx={{
