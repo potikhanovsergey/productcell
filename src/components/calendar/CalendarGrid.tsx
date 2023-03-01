@@ -5,8 +5,6 @@ import { drawerDetails, hoveredRowCell } from "@/store/LegendStore";
 import CalendarRow from "./CalendarRow";
 import { rows } from "@/pages/_app";
 
-hoveredRowCell.onChange(console.log);
-
 const CalendarGrid = (props: BoxProps) => {
   const tooltipVisible = useComputed(() => {
     return hoveredRowCell.get() !== "null" && !drawerDetails.opened.get();
