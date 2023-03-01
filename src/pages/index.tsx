@@ -1,9 +1,21 @@
 import Layout from "@/components/layout/Layout";
-import { Box, Container, Title, useMantineTheme, Text } from "@mantine/core";
+import {
+  Box,
+  Container,
+  Title,
+  useMantineTheme,
+  Text,
+  Skeleton,
+} from "@mantine/core";
 import dynamic from "next/dynamic";
 
 const Calendar = dynamic(() => import("@/components/calendar/Calendar"), {
   ssr: false,
+  loading: () => (
+    <Container size="md" px={0}>
+      <Skeleton height="60vh" width="100%" />
+    </Container>
+  ),
 });
 
 const IndexPage = () => {
