@@ -1,6 +1,10 @@
-import Calendar from "@/components/calendar/Calendar";
 import Layout from "@/components/layout/Layout";
 import { Box, Container, Title, useMantineTheme, Text } from "@mantine/core";
+import dynamic from "next/dynamic";
+
+const Calendar = dynamic(() => import("@/components/calendar/Calendar"), {
+  ssr: false,
+});
 
 const IndexPage = () => {
   const theme = useMantineTheme();
