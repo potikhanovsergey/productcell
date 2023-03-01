@@ -51,7 +51,7 @@ const Footer = () => {
               <Anchor href="https://t.me/daryasyomina" target="_blank">
                 <Avatar pos="relative">
                   <Image fill alt="Darya Syomina" src="/images/syomina.jpg" />
-                </Avatar>{" "}
+                </Avatar>
               </Anchor>
             </Tooltip>
 

@@ -1,9 +1,11 @@
 import { Box, BoxProps, Tooltip } from "@mantine/core";
-import TooltipLabel from "./TooltipLabel";
 import { observer, useComputed } from "@legendapp/state/react";
 import { drawerDetails, hoveredRowCell } from "@/store/LegendStore";
 import CalendarRow from "./CalendarRow";
 import { rows } from "@/pages/_app";
+import dynamic from "next/dynamic";
+
+const TooltipLabel = dynamic(() => import("./TooltipLabel"), { ssr: false });
 
 const CalendarGrid = (props: BoxProps) => {
   const tooltipVisible = useComputed(() => {

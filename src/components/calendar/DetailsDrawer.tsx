@@ -10,9 +10,14 @@ import {
   Box,
   Button,
 } from "@mantine/core";
-import PrimaryButton from "../PrimaryButton";
+import dynamic from "next/dynamic";
 import BadgeLink from "./BadgeLink";
 import Stats from "./Stats";
+
+const DrawerDate = dynamic(() => import("./DrawerDate"), { ssr: false });
+const TimeTravelButton = dynamic(() => import("./TimeTravelButton"), {
+  ssr: false,
+});
 
 const DetailsDrawer = () => {
   const onClose = () => drawerDetails.opened.set(false);
@@ -32,13 +37,7 @@ const DetailsDrawer = () => {
       position="right"
     >
       <>
-        <Show if={details.date}>
-          {() => (
-            <Text color="dimmed" mb="sm">
-              {details.date!.format("DD MMMM YYYY")}
-            </Text>
-          )}
-        </Show>
+        <DrawerDate />
         <Text color="dimmed" size="sm" mb={4}>
           Sorted by the amount of upvotes at the moment
         </Text>
@@ -121,20 +120,7 @@ const DetailsDrawer = () => {
             ))
           }
         </Show>
-        <Show if={details.date}>
-          {() => (
-            <PrimaryButton
-              fullWidth
-              target="_blank"
-              component="a"
-              href={`https://producthunt.com/time-travel/${details.date?.format(
-                "YYYY/MM/DD"
-              )}`}
-            >
-              Product Hunt time travel
-            </PrimaryButton>
-          )}
-        </Show>
+        <TimeTravelButton />
       </>
     </Drawer>
   );
