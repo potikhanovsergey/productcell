@@ -2,27 +2,29 @@ import dayjs, { Dayjs } from "dayjs";
 import { ProductHash, ProductHuntApiResponse } from "./types";
 import { computed, observable } from "@legendapp/state";
 
-const hoveredRow = observable(null as number | null);
-const hoveredRowCell = observable(null as number | null);
-const productsHash = observable({} as ProductHash);
-const loadingHash = observable([] as string[]);
-const minDate = dayjs().subtract(35, "month").endOf("month");
+export const hoveredRow = observable(null as number | null);
+export const hoveredRowCell = observable(null as number | null);
+export const productsHash = observable({} as ProductHash);
+export const loadingHash = observable([] as string[]);
+export const minDate = dayjs().subtract(35, "month").endOf("month");
 
-const drawerDetails = observable({
+export const filterBy = observable("all");
+
+export const drawerDetails = observable({
   opened: false,
   products: null as ProductHuntApiResponse[] | null,
   date: null as Dayjs | null,
 });
 
-const hoveredProduct = computed(() => {
+export const hoveredProduct = computed(() => {
   const hoveredRowValue = hoveredRow.get();
   const hoveredRowCellValue = hoveredRowCell.get();
   const index = `${hoveredRowValue} ${hoveredRowCellValue}`;
-  const produchHashValue = productsHash.get();
-  return produchHashValue[index]?.[0];
+  const produchHashValue = productsHash[filterBy.get()].get();
+  return produchHashValue?.[index]?.[0];
 });
 
-const hoveredCellDate = computed(() => {
+export const hoveredCellDate = computed(() => {
   const hoveredRowValue = hoveredRow.get();
   const hoveredRowCellValue = hoveredRowCell.get();
   if (hoveredRowValue === null || hoveredRowCellValue === null) return null;
@@ -32,14 +34,3 @@ const hoveredCellDate = computed(() => {
     .add(hoveredRowCellValue, "day")
     .format("MMMM D, YYYY");
 });
-
-export {
-  hoveredRow,
-  hoveredRowCell,
-  productsHash,
-  hoveredCellDate,
-  minDate,
-  hoveredProduct,
-  drawerDetails,
-  loadingHash,
-};

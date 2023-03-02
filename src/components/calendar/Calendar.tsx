@@ -1,6 +1,4 @@
-import { getProduct } from "@/queries/getProduct";
-import { loadingHash, productsHash } from "@/store/LegendStore";
-import { observer } from "@legendapp/state/react";
+import { observer, Computed } from "@legendapp/state/react";
 import {
   Box,
   Container,
@@ -11,7 +9,6 @@ import {
   Stack,
   useMantineTheme,
 } from "@mantine/core";
-import { Dayjs } from "dayjs";
 import CalendarGrid from "./CalendarGrid";
 import { StickyContainer, Sticky } from "react-sticky";
 import { useState } from "react";
@@ -19,7 +16,6 @@ import Arrow from "./Arrow";
 import ColumnLabels from "./ColumnLabels";
 import RowLabels from "./RowLabels";
 import DetailsDrawer from "./DetailsDrawer";
-
 
 const Calendar = () => {
   const theme = useMantineTheme();
@@ -42,27 +38,31 @@ const Calendar = () => {
                 <Text>Days</Text>
                 <Arrow />
               </Group>
-              <Sticky>
-                {({ style, isSticky }) => (
-                  <Box
-                    style={style}
-                    sx={{
-                      background: theme.white,
-                      zIndex: 10,
-                      left: `unset !important`,
-                      [`@media (max-width: 960px)`]: {
-                        left: isSticky
-                          ? `calc(50px + -1 * ${rem(
-                              scrollPosition.x
-                            )}) !important`
-                          : undefined,
-                      },
-                    }}
-                  >
-                    <ColumnLabels mb={4} />
-                  </Box>
+              <Computed>
+                {() => (
+                  <Sticky>
+                    {({ style, isSticky }) => (
+                      <Box
+                        style={style}
+                        sx={{
+                          background: theme.white,
+                          zIndex: 10,
+                          left: `unset !important`,
+                          [`@media (max-width: 960px)`]: {
+                            left: isSticky
+                              ? `calc(50px + -1 * ${rem(
+                                  scrollPosition.x
+                                )}) !important`
+                              : undefined,
+                          },
+                        }}
+                      >
+                        <ColumnLabels mb={4} />
+                      </Box>
+                    )}
+                  </Sticky>
                 )}
-              </Sticky>
+              </Computed>
             </Stack>
 
             <RowLabels pr={10} />

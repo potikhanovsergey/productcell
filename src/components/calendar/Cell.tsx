@@ -9,6 +9,7 @@ import { FC, ForwardedRef, forwardRef } from "react";
 import { ProductHuntApiResponse } from "@/store/types";
 import {
   drawerDetails,
+  filterBy,
   hoveredRow,
   hoveredRowCell,
   productsHash,
@@ -17,7 +18,6 @@ import { observer } from "@legendapp/state/react";
 import { batch } from "@legendapp/state";
 import { getDateByIndexes } from "@/helpers";
 import { fetchProductAndSet } from "@/queries/getProduct";
-
 
 const useStyles = createStyles(
   (theme, { product }: { product: ProductHuntApiResponse }) => ({
@@ -62,7 +62,7 @@ const Cell: FC<DayProps> = forwardRef(
 
     const onClick = () => {
       const index = `${rowIndex} ${cellIndex}`;
-      const products = productsHash.get()[index];
+      const products = productsHash[filterBy.get()][index].get();
       const date = getDateByIndexes({ rowIndex, cellIndex });
       if (products) {
         batch(() => {
@@ -80,8 +80,9 @@ const Cell: FC<DayProps> = forwardRef(
         });
       }
     };
+
     const index = `${rowIndex} ${cellIndex}`;
-    const product = productsHash.get()[index]?.[0];
+    const product = productsHash[filterBy.get()].get()?.[index]?.[0];
     const { classes } = useStyles({ product });
 
     return (

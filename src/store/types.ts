@@ -23,5 +23,7 @@ export interface AxiosProductResponse {
 }
 
 export interface ProductHash {
-  [key: string]: ProductHuntApiResponse[];
+  [key: string]: {
+    [key: string]: ProductHuntApiResponse[];
+  };
 }

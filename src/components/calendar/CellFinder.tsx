@@ -1,5 +1,4 @@
-import { getProduct } from "@/queries/getProduct";
-import { minDate, productsHash } from "@/store/LegendStore";
+import { filterBy, minDate, productsHash } from "@/store/LegendStore";
 import { ActionIcon, Group } from "@mantine/core";
 import { DateInputProps, DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
@@ -25,7 +24,7 @@ const CellFinder = (props: DateInputProps) => {
     index: string;
     date: Date;
   }) => {
-    if (!productsHash.get()[index]) {
+    if (!productsHash[filterBy.get()].get()[index]) {
       fetchProductAndSet({ index, date: dayjs(date) });
     }
   };

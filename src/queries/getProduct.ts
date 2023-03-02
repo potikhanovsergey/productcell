@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 import { AxiosProductResponse } from "@/store/types";
-import { loadingHash, productsHash } from "@/store/LegendStore";
+import { filterBy, loadingHash, productsHash } from "@/store/LegendStore";
+
 const timezone = "America/Vancouver";
 
 const endpoint = "https://api.producthunt.com/v2/api/graphql";
@@ -15,10 +16,11 @@ const options = {
   headers: headers,
 };
 
-const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: DateTime!) {
+const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: DateTime!, $topic: String) {
     posts(
       postedAfter: $dateFrom
       postedBefore: $dateTo
+      topic: $topic
       order: VOTES
       first: 10
     ) {
@@ -51,6 +53,7 @@ export const getProduct = async ({
   dateTo: Date;
 }) => {
   try {
+    const filterByValue = filterBy.get();
     const response = await axios<AxiosProductResponse>(endpoint, {
       ...options,
       data: {
@@ -58,6 +61,7 @@ export const getProduct = async ({
         variables: {
           dateFrom,
           dateTo,
+          topic: filterByValue === "all" ? undefined : filterByValue,
         },
       },
     });
@@ -98,9 +102,13 @@ export const fetchProductAndSet = async ({
     loadingHash.set((prev) => prev.filter((item) => item !== index));
     if (response === 429) {
     } else if (response?.data) {
+      const filterByValue = filterBy.get();
       productsHash.set((prev) => ({
         ...prev,
-        [index]: response.data.data.posts.nodes,
+        [filterByValue]: {
+          ...prev[filterByValue],
+          [index]: response.data.data.posts.nodes,
+        },
       }));
     }
   }
