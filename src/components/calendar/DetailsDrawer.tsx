@@ -10,14 +10,10 @@ import {
   Box,
   Button,
 } from "@mantine/core";
-import dynamic from "next/dynamic";
 import BadgeLink from "./BadgeLink";
 import Stats from "./Stats";
-
-const DrawerDate = dynamic(() => import("./DrawerDate"), { ssr: false });
-const TimeTravelButton = dynamic(() => import("./TimeTravelButton"), {
-  ssr: false,
-});
+import DrawerDate from "./DrawerDate";
+import TimeTravelButton from "./TimeTravelButton";
 
 const DetailsDrawer = () => {
   const onClose = () => drawerDetails.opened.set(false);

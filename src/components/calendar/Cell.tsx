@@ -15,8 +15,9 @@ import {
 } from "@/store/LegendStore";
 import { observer } from "@legendapp/state/react";
 import { batch } from "@legendapp/state";
-import { fetchProductAndSet } from "./Calendar";
 import { getDateByIndexes } from "@/helpers";
+import { fetchProductAndSet } from "@/queries/getProduct";
+
 
 const useStyles = createStyles(
   (theme, { product }: { product: ProductHuntApiResponse }) => ({
@@ -56,7 +57,7 @@ const Cell: FC<DayProps> = forwardRef(
       });
     };
     const onMouseLeave = () => {
-      hoveredRowCell.set("null");
+      hoveredRowCell.set(null);
     };
 
     const onClick = () => {

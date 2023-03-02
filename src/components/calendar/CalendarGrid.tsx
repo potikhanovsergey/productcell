@@ -9,7 +9,7 @@ const TooltipLabel = dynamic(() => import("./TooltipLabel"), { ssr: false });
 
 const CalendarGrid = (props: BoxProps) => {
   const tooltipVisible = useComputed(() => {
-    return hoveredRowCell.get() !== "null" && !drawerDetails.opened.get();
+    return hoveredRowCell.get() !== null && !drawerDetails.opened.get();
   });
   return (
     <Tooltip.Floating

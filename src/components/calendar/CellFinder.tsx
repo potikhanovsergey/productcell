@@ -5,6 +5,7 @@ import { DateInputProps, DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
+import { fetchProductAndSet } from "@/queries/getProduct";
 
 export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
   const rowIndex = dayjs()
@@ -17,25 +18,6 @@ export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
 
 const CellFinder = (props: DateInputProps) => {
   const [date, setDate] = useState<Date | null>(null);
-  const fetchProductAndSet = async ({
-    index,
-    date,
-  }: {
-    index: string;
-    date: Dayjs;
-  }) => {
-    const response = await getProduct({
-      dateFrom: date.utc().startOf("day").toDate(),
-      dateTo: date.utc().startOf("day").add(1, "day").toDate(),
-    });
-    if (response === 429) {
-    } else if (response?.data) {
-      productsHash.set((prev) => ({
-        ...prev,
-        [index]: response.data.data.posts.nodes,
-      }));
-    }
-  };
   const fetchProduct = async ({
     index,
     date,

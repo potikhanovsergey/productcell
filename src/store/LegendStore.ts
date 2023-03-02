@@ -3,8 +3,9 @@ import { ProductHash, ProductHuntApiResponse } from "./types";
 import { computed, observable } from "@legendapp/state";
 
 const hoveredRow = observable(null as number | null);
-const hoveredRowCell = observable("null" as number | "null");
+const hoveredRowCell = observable(null as number | null);
 const productsHash = observable({} as ProductHash);
+const loadingHash = observable([] as string[]);
 const minDate = dayjs().subtract(35, "month").endOf("month");
 
 const drawerDetails = observable({
@@ -24,7 +25,7 @@ const hoveredProduct = computed(() => {
 const hoveredCellDate = computed(() => {
   const hoveredRowValue = hoveredRow.get();
   const hoveredRowCellValue = hoveredRowCell.get();
-  if (hoveredRowValue === null || hoveredRowCellValue === "null") return null;
+  if (hoveredRowValue === null || hoveredRowCellValue === null) return null;
   return dayjs()
     .startOf("month")
     .subtract(hoveredRowValue, "month")
@@ -40,4 +41,5 @@ export {
   minDate,
   hoveredProduct,
   drawerDetails,
+  loadingHash,
 };

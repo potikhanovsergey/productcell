@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import axios from "axios";
 import { AxiosProductResponse } from "@/store/types";
+import { loadingHash, productsHash } from "@/store/LegendStore";
+const timezone = "America/Vancouver";
 
 const endpoint = "https://api.producthunt.com/v2/api/graphql";
 const headers = {
@@ -64,6 +66,42 @@ export const getProduct = async ({
   } catch (e: any) {
     if (e?.response?.status === 429) {
       return 429;
+    }
+  }
+};
+
+export const fetchProductAndSet = async ({
+  index,
+  date,
+}: {
+  index: string;
+  date: Dayjs;
+}) => {
+  if (!loadingHash.get().includes(index)) {
+    const dateFrom = date
+      .utc()
+      .tz(timezone)
+      .startOf("day")
+      .add(1, "day")
+      .toDate();
+    const dateTo = date
+      .utc()
+      .tz(timezone)
+      .startOf("day")
+      .add(2, "day")
+      .toDate();
+    loadingHash.set((prev) => [...prev, index]);
+    const response = await getProduct({
+      dateFrom,
+      dateTo,
+    });
+    loadingHash.set((prev) => prev.filter((item) => item !== index));
+    if (response === 429) {
+    } else if (response?.data) {
+      productsHash.set((prev) => ({
+        ...prev,
+        [index]: response.data.data.posts.nodes,
+      }));
     }
   }
 };

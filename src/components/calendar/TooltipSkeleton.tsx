@@ -1,5 +1,10 @@
-import { hoveredCellDate, hoveredRowCell } from "@/store/LegendStore";
-import { observer, Show } from "@legendapp/state/react";
+import {
+  hoveredCellDate,
+  hoveredRow,
+  hoveredRowCell,
+  loadingHash,
+} from "@/store/LegendStore";
+import { observer, Show, useComputed } from "@legendapp/state/react";
 import {
   Group,
   Badge,
@@ -23,6 +28,9 @@ const HoveredCellDate = dynamic(() => import("./HoveredCellDate"), {
 const TooltipSkeleton = () => {
   const theme = useMantineTheme();
   const date = hoveredCellDate.get();
+  const showLoader = useComputed(() =>
+    loadingHash.get().includes(`${hoveredRow.get()} ${hoveredRowCell.get()}`)
+  );
   return (
     <>
       <Group noWrap w="100%" align="flex-start">
@@ -49,10 +57,15 @@ const TooltipSkeleton = () => {
       </Group>
       <div>
         <Show if={date}>{() => <HoveredCellDate />}</Show>
-        <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
-          <Box mt={-2} component={IconClick} size={16} /> Click to load the day
-          info
-        </Text>
+        <Group position="apart" noWrap>
+          <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
+            <Box mt={-2} component={IconClick} size={16} /> Click to load the
+            day info
+          </Text>
+          <Show if={showLoader.get()}>
+            <Loader size="xs" />
+          </Show>
+        </Group>
       </div>
     </>
   );

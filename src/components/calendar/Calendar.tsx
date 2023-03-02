@@ -1,5 +1,5 @@
 import { getProduct } from "@/queries/getProduct";
-import { productsHash } from "@/store/LegendStore";
+import { loadingHash, productsHash } from "@/store/LegendStore";
 import { observer } from "@legendapp/state/react";
 import {
   Box,
@@ -16,40 +16,10 @@ import CalendarGrid from "./CalendarGrid";
 import { StickyContainer, Sticky } from "react-sticky";
 import { useState } from "react";
 import Arrow from "./Arrow";
-import dynamic from "next/dynamic";
+import ColumnLabels from "./ColumnLabels";
+import RowLabels from "./RowLabels";
+import DetailsDrawer from "./DetailsDrawer";
 
-const DetailsDrawer = dynamic(() => import("./DetailsDrawer"), { ssr: false });
-const ColumnLabels = dynamic(() => import("./ColumnLabels"), { ssr: false });
-const RowLabels = dynamic(() => import("./RowLabels"), { ssr: false });
-
-const timezone = "America/Vancouver";
-
-export const fetchProductAndSet = async ({
-  index,
-  date,
-}: {
-  index: string;
-  date: Dayjs;
-}) => {
-  const dateFrom = date
-    .utc()
-    .tz(timezone)
-    .startOf("day")
-    .add(1, "day")
-    .toDate();
-  const dateTo = date.utc().tz(timezone).startOf("day").add(2, "day").toDate();
-  const response = await getProduct({
-    dateFrom,
-    dateTo,
-  });
-  if (response === 429) {
-  } else if (response?.data) {
-    productsHash.set((prev) => ({
-      ...prev,
-      [index]: response.data.data.posts.nodes,
-    }));
-  }
-};
 
 const Calendar = () => {
   const theme = useMantineTheme();
