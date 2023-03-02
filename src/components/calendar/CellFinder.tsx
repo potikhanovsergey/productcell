@@ -5,6 +5,7 @@ import { IconSearch } from "@tabler/icons-react";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { fetchProductAndSet } from "@/queries/getProduct";
+import { observer } from "@legendapp/state/react";
 
 export const getIdByDate = ({ date }: { date: Date | Dayjs }) => {
   const rowIndex = dayjs()
@@ -66,4 +67,4 @@ const CellFinder = (props: DateInputProps) => {
   );
 };
 
-export default CellFinder;
+export default observer(CellFinder);
