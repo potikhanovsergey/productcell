@@ -11,7 +11,7 @@ const ColumnLabels = (props: StackProps) => {
         zIndex: 10,
         position: "sticky",
         top: 0,
-        background: theme.white,
+        background: theme.colorScheme === "dark" ? "#161920" : theme.white,
         userSelect: "none",
       }}
       {...props}

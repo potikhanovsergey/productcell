@@ -6,11 +6,10 @@ import { Show } from "@legendapp/state/react";
 import TooltipBody from "./TooltipBody";
 
 const TooltipLabel = () => {
-  const product = hoveredProduct.get();
   return (
     <TooltipWrapper>
-      <Show if={product} else={<TooltipSkeleton />}>
-        <TooltipBody />
+      <Show if={hoveredProduct} else={() => <TooltipSkeleton />}>
+        {() => <TooltipBody />}
       </Show>
     </TooltipWrapper>
   );

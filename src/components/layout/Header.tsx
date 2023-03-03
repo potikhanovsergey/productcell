@@ -6,6 +6,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import dynamic from "next/dynamic";
+import ColorSchemeToggle from "../ColorSchemeToggle";
 import Logo from "../Logo";
 
 const CellFinder = dynamic(() => import("../calendar/CellFinder"), {
@@ -14,12 +15,21 @@ const CellFinder = dynamic(() => import("../calendar/CellFinder"), {
 });
 
 const Header = () => {
+  const theme = useMantineTheme();
   return (
-    <MantineHeader height={80}>
+    <MantineHeader
+      height={80}
+      sx={{
+        background: theme.colorScheme === "dark" ? "#161920" : theme.white,
+      }}
+    >
       <Container size="xl" h="100%">
-        <Group h="100%" position="apart">
-          <Logo h={48} />
-          <CellFinder />
+        <Group h="100%" position="apart" noWrap>
+          <Logo h={40} />
+          <Group noWrap spacing="xs">
+            <ColorSchemeToggle />
+            <CellFinder />
+          </Group>
         </Group>
       </Container>
     </MantineHeader>

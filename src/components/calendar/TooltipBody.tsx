@@ -37,7 +37,7 @@ const TooltipBody = () => {
         <TooltipBadges />
       </Group>
       <div>
-        <Show if={product}>{() => <HoveredCellDate />}</Show>
+        <Show if={hoveredProduct}>{() => <HoveredCellDate />}</Show>
         <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
           <Box mt={-2} component={IconClick} size={16} />
           Click on the cell to see the details

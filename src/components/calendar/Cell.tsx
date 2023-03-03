@@ -3,6 +3,7 @@ import {
   UnstyledButton,
   UnstyledButtonProps,
   getStylesRef,
+  useMantineTheme,
 } from "@mantine/core";
 import { FC, ForwardedRef, forwardRef } from "react";
 
@@ -30,7 +31,11 @@ const useStyles = createStyles(
       },
       ref: getStylesRef("box"),
       aspectRatio: "1",
-      backgroundColor: !!product ? "transparent" : theme.colors.gray[3],
+      backgroundColor: !!product
+        ? "transparent"
+        : theme.colorScheme === "dark"
+        ? theme.colors.dark[5]
+        : theme.colors.gray[3],
       backgroundImage: product
         ? `url(${product.thumbnail.url}&width=100)`
         : undefined,

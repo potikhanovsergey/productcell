@@ -7,7 +7,6 @@ import {
   ScrollArea,
   Text,
   Stack,
-  useMantineTheme,
 } from "@mantine/core";
 import CalendarGrid from "./CalendarGrid";
 import { StickyContainer, Sticky } from "react-sticky";
@@ -18,7 +17,6 @@ import RowLabels from "./RowLabels";
 import DetailsDrawer from "./DetailsDrawer";
 
 const Calendar = () => {
-  const theme = useMantineTheme();
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
 
   return (
@@ -45,7 +43,6 @@ const Calendar = () => {
                       <Box
                         style={style}
                         sx={{
-                          background: theme.white,
                           zIndex: 10,
                           left: `unset !important`,
                           [`@media (max-width: 960px)`]: {
@@ -57,7 +54,7 @@ const Calendar = () => {
                           },
                         }}
                       >
-                        <ColumnLabels mb={4} />
+                        <ColumnLabels py={4} />
                       </Box>
                     )}
                   </Sticky>

@@ -1,11 +1,16 @@
 import { AppProps } from "next/app";
-import { MantineProvider } from "@mantine/core";
+import {
+  ColorScheme,
+  ColorSchemeProvider,
+  MantineProvider,
+} from "@mantine/core";
 import MantineTheme from "@/MantineTheme";
 import { Analytics } from "@vercel/analytics/react";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 import { enableLegendStateReact } from "@legendapp/state/react";
+import { useState } from "react";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,12 +36,25 @@ for (let i = 0; i < months; i++) {
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
   return (
     <>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
-        <Component {...pageProps} />
-        <Analytics />
-      </MantineProvider>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
+      >
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{ ...MantineTheme, colorScheme }}
+        >
+          <Component {...pageProps} />
+
+          <Analytics />
+        </MantineProvider>
+      </ColorSchemeProvider>
     </>
   );
 }

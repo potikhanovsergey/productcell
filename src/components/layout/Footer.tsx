@@ -14,7 +14,13 @@ import Image from "next/image";
 const Footer = () => {
   const theme = useMantineTheme();
   return (
-    <MantineFooter height={80} fixed={false}>
+    <MantineFooter
+      height={80}
+      fixed={false}
+      sx={{
+        background: theme.colorScheme === "dark" ? "#161920" : theme.white,
+      }}
+    >
       <Container size="xl" h="100%">
         <Group
           h="100%"

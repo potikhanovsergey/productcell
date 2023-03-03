@@ -143,6 +143,7 @@ const MantineTheme: MantineThemeOverride = {
       overflowX: "hidden",
       letterSpacing: "-.01em",
       WebkitFontSmoothing: "antialiased",
+      background: theme.colorScheme === "dark" ? "#161920" : theme.white,
     },
   }),
 };

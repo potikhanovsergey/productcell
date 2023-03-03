@@ -8,8 +8,6 @@ import {
   Text,
   Skeleton,
   Stack,
-  Select,
-  Group,
 } from "@mantine/core";
 import dynamic from "next/dynamic";
 

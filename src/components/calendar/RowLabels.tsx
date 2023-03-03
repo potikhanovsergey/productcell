@@ -12,7 +12,7 @@ const RowLabels = (props: StackProps) => {
         userSelect: "none",
         position: "sticky",
         left: 0,
-        background: theme.white,
+        background: theme.colorScheme === "dark" ? "#161920" : theme.white,
         zIndex: 10,
       }}
       spacing={0}

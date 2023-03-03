@@ -27,7 +27,6 @@ const HoveredCellDate = dynamic(() => import("./HoveredCellDate"), {
 
 const TooltipSkeleton = () => {
   const theme = useMantineTheme();
-  const date = hoveredCellDate.get();
   const showLoader = useComputed(() =>
     loadingHash.get().includes(`${hoveredRow.get()} ${hoveredRowCell.get()}`)
   );
@@ -56,15 +55,13 @@ const TooltipSkeleton = () => {
         ))}
       </Group>
       <div>
-        <Show if={date}>{() => <HoveredCellDate />}</Show>
+        <Show if={hoveredCellDate}>{() => <HoveredCellDate />}</Show>
         <Group position="apart" noWrap>
           <Text color="dimmed" size="xs" component={Group} noWrap spacing={4}>
             <Box mt={-2} component={IconClick} size={16} /> Click to load the
             day info
           </Text>
-          <Show if={showLoader.get()}>
-            <Loader size="xs" />
-          </Show>
+          <Show if={showLoader}>{() => <Loader size="xs" />}</Show>
         </Group>
       </div>
     </>
