@@ -1,5 +1,6 @@
 import {
   hoveredCellDate,
+  hoveredIndex,
   hoveredRow,
   hoveredRowCell,
   loadingHash,
@@ -28,7 +29,7 @@ const HoveredCellDate = dynamic(() => import("./HoveredCellDate"), {
 const TooltipSkeleton = () => {
   const theme = useMantineTheme();
   const showLoader = useComputed(() =>
-    loadingHash.get().includes(`${hoveredRow.get()} ${hoveredRowCell.get()}`)
+    loadingHash.get().includes(hoveredIndex.get())
   );
   return (
     <>

@@ -1,4 +1,4 @@
-import { drawerDetails } from "@/store/LegendStore";
+import { drawerDetails, filterBy } from "@/store/LegendStore";
 import { observer, Show, Switch } from "@legendapp/state/react";
 import {
   Drawer,
@@ -32,14 +32,29 @@ const DetailsDrawer = () => {
       size="md"
       position="right"
     >
-      <>
-        <DrawerDate />
-        <Text color="dimmed" size="sm" mb={4}>
-          Sorted by the amount of upvotes at the moment
-        </Text>
-        <Show if={details.products}>
-          {() =>
-            details.products!.map((product, index) => (
+      <DrawerDate />
+
+      <Show
+        if={details.products}
+        else={
+          <Text>
+            No products for{" "}
+            <BadgeLink
+              size="xs"
+              href={`https://producthunt.com/search?q=${filterBy.get()}`}
+            >
+              {filterBy.get()}
+            </BadgeLink>{" "}
+            at this day
+          </Text>
+        }
+      >
+        {() => (
+          <>
+            <Text color="dimmed" size="sm" mb={4}>
+              Sorted by the amount of upvotes at the moment
+            </Text>
+            {details.products!.map((product, index) => (
               <Paper key={product.id} withBorder p="sm" mb="md">
                 <Group noWrap align="flex-start" mb="xs">
                   <a href={product.url} target="_blank" rel="noreferrer">
@@ -113,11 +128,11 @@ const DetailsDrawer = () => {
                   To launch page
                 </Button>
               </Paper>
-            ))
-          }
-        </Show>
-        <TimeTravelButton />
-      </>
+            ))}
+            <TimeTravelButton />
+          </>
+        )}
+      </Show>
     </Drawer>
   );
 };

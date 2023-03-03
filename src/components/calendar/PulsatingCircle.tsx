@@ -1,6 +1,4 @@
-import { hoveredRowCell } from "@/store/LegendStore";
 import { createStyles, Box, keyframes, Center, Tooltip } from "@mantine/core";
-
 
 export const pulseOrange = keyframes({
   "0%": {

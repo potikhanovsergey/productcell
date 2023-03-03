@@ -16,12 +16,13 @@ export const drawerDetails = observable({
   date: null as Dayjs | null,
 });
 
+export const hoveredIndex = computed(() => {
+  return `${hoveredRow.get()} ${hoveredRowCell.get()}`;
+});
+
 export const hoveredProduct = computed(() => {
-  const hoveredRowValue = hoveredRow.get();
-  const hoveredRowCellValue = hoveredRowCell.get();
-  const index = `${hoveredRowValue} ${hoveredRowCellValue}`;
   const produchHashValue = productsHash[filterBy.get()].get();
-  return produchHashValue?.[index]?.[0];
+  return produchHashValue?.[hoveredIndex.get()]?.[0];
 });
 
 export const hoveredCellDate = computed(() => {
