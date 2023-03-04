@@ -22,6 +22,10 @@ const nextConfig = {
   images: {
     domains: ["ph-files.imgix.net"],
   },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
 };
 
 module.exports = withPWA(nextConfig);

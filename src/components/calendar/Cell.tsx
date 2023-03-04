@@ -15,7 +15,7 @@ import {
   hoveredRowCell,
   productsHash,
 } from "@/store/LegendStore";
-import { observer } from "@legendapp/state/react";
+import { observer, useComputed } from "@legendapp/state/react";
 import { batch } from "@legendapp/state";
 import { getDateByIndexes } from "@/helpers";
 import { fetchProductAndSet } from "@/queries/getProduct";
@@ -90,10 +90,15 @@ const Cell: FC<DayProps> = forwardRef(
     const product = productsHash[filterBy.get()].get()?.[index]?.[0];
     const { classes } = useStyles({ product });
 
+    const ariaLabel = useComputed(() =>
+      getDateByIndexes({ rowIndex, cellIndex }).format("MMMM D, YYYY")
+    );
+
     return (
       <UnstyledButton
         data-index={`${rowIndex} ${cellIndex}`}
         ref={ref}
+        aria-label={ariaLabel}
         className={classes.box}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

@@ -58,6 +58,7 @@ const CellFinder = (props: DateInputProps) => {
         variant="filled"
         disabled={!date}
         color="orange"
+        aria-label="Search the products by date"
         size={30}
         onClick={findCell}
       >

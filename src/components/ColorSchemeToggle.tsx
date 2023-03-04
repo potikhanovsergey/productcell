@@ -15,6 +15,7 @@ const ColorSchemeToggle = () => {
         onClick={() => toggleColorScheme()}
         variant="transparent"
         size="lg"
+        aria-label="Toggle website's color scheme"
       >
         {colorScheme === "dark" ? (
           <IconSun color={theme.white} size="1.2rem" />

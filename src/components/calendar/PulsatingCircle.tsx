@@ -29,9 +29,10 @@ const useStyles = createStyles((theme) => ({
 const PulsatingCircle = () => {
   const { classes } = useStyles();
   return (
-    <Tooltip label="To be discovered today, click to vote">
+    <Tooltip label="To be discovered today, click to vote on Product Hunt">
       <Center
         component="a"
+        aria-label="To be discovered today, click to vote on Product Hunt"
         target="_blank"
         href="https://producthunt.com"
         h="100%"
