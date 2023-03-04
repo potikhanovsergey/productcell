@@ -93,7 +93,7 @@ export const fetchProductAndSet = async ({
       .tz(timezone)
       .startOf("day")
       .add(2, "day")
-      .subtract(1, "hour")
+      .subtract(1, "second")
       .toDate();
     loadingHash.set((prev) => [...prev, index]);
     const response = await getProduct({
