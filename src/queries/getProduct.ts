@@ -3,12 +3,12 @@ import axios from "axios";
 import { AxiosProductResponse } from "@/store/types";
 import { filterBy, loadingHash, productsHash } from "@/store/LegendStore";
 
-const timezone = "America/Vancouver";
+const timezone = "US/Pacific";
 
 const endpoint = "https://api.producthunt.com/v2/api/graphql";
 const headers = {
   "content-type": "application/json",
-  Authorization: "Bearer fA3IFlvVj8OM2HbXU_dKMXwdAq0HA0Akl8nehMt3358",
+  Authorization: `Bearer ${process.env.PRODUCT_HUNT_API_TOKEN}`,
 };
 
 const options = {
@@ -93,6 +93,7 @@ export const fetchProductAndSet = async ({
       .tz(timezone)
       .startOf("day")
       .add(2, "day")
+      .subtract(1, "hour")
       .toDate();
     loadingHash.set((prev) => [...prev, index]);
     const response = await getProduct({
