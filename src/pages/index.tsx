@@ -7,7 +7,9 @@ import {
   useMantineTheme,
   Text,
   Skeleton,
+  Image,
   Stack,
+  Center,
 } from "@mantine/core";
 import dynamic from "next/dynamic";
 
@@ -28,6 +30,7 @@ const IndexPage = () => {
         <Container mb="xl">
           <Stack align="center">
             <Box maw={500}>
+              
               <Title
                 align="center"
                 mb={4}
@@ -57,8 +60,12 @@ const IndexPage = () => {
                 product that was created in that day. Click one more time to see
                 the details.
               </Text>
+
             </Box>
             <Filter />
+            <Center mt="xs" component="a" href="https://www.producthunt.com/posts/product-cell?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-product&#0045;cell" target="_blank" rel="noreferrer">
+                <Image src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=382506&theme=neutral`} alt="Product&#0032;Cell - See&#0032;the&#0032;best&#0032;of&#0032;Product&#0032;Hunt&#0032;through&#0032;the&#0032;life&#0032;calendar | Product Hunt" width={200} height="auto" />
+              </Center>
           </Stack>
         </Container>
 
