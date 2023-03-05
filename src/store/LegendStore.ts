@@ -33,5 +33,5 @@ export const hoveredCellDate = computed(() => {
     .startOf("month")
     .subtract(hoveredRowValue, "month")
     .add(hoveredRowCellValue, "day")
-    .format("MMMM D, YYYY");
+    .format("MMMM D YYYY, dddd");
 });

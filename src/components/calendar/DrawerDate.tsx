@@ -7,7 +7,7 @@ const DrawerDate = () => {
     <Show if={drawerDetails}>
       {() => (
         <Text color="dimmed" mb="sm">
-          {drawerDetails.date.get()!.format("DD MMMM YYYY")}
+          {drawerDetails.date.get()!.format("DD MMMM YYYY, dddd")}
         </Text>
       )}
     </Show>
