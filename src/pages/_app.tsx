@@ -11,6 +11,7 @@ import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 import { enableLegendStateReact } from "@legendapp/state/react";
 import { useState } from "react";
+import { ModalsProvider } from "@mantine/modals";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -40,7 +41,7 @@ export default function App(props: AppProps) {
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
   return (
-    <>
+    <ModalsProvider modalProps={{ centered: true }}>
       <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
@@ -51,10 +52,9 @@ export default function App(props: AppProps) {
           theme={{ ...MantineTheme, colorScheme }}
         >
           <Component {...pageProps} />
-
           <Analytics />
         </MantineProvider>
       </ColorSchemeProvider>
-    </>
+    </ModalsProvider>
   );
 }

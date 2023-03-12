@@ -1,11 +1,11 @@
 import { daysArray } from "@/pages/_app";
-import { Group, Stack, StackProps, Text, useMantineTheme } from "@mantine/core";
+import { Box, Group, Stack, StackProps, Text, useMantineTheme } from "@mantine/core";
 import Arrow from "./Arrow";
 
 const ColumnLabels = (props: StackProps) => {
   const theme = useMantineTheme();
   return (
-    <Stack
+    <Group
       spacing={4}
       sx={{
         zIndex: 10,
@@ -16,14 +16,15 @@ const ColumnLabels = (props: StackProps) => {
       }}
       {...props}
     >
-      <Group grow noWrap spacing={4} pos="relative">
+      <Group sx={{ flex: "1 !important" }} grow noWrap spacing={4} pos="relative">
         {daysArray.map((_, column) => (
           <Text align="center" key={column} size={10}>
             {column + 1}
           </Text>
         ))}
       </Group>
-    </Stack>
+      <Box w={24} />
+    </Group>
   );
 };
 
