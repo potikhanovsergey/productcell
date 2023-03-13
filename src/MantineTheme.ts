@@ -1,6 +1,6 @@
 import { MantineThemeOverride, ButtonStylesParams } from "@mantine/core";
 
-const primaryColor = "#FF5454";
+export const primaryColor = "#FF5454";
 
 const MantineTheme: MantineThemeOverride = {
   primaryShade: 5,

@@ -1,9 +1,17 @@
 import { observer } from "@legendapp/state/react";
-import { ActionIcon, Box, createStyles, getStylesRef, Group, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  createStyles,
+  getStylesRef,
+  Group,
+  Tooltip,
+} from "@mantine/core";
 import { openModal } from "@mantine/modals";
 import { IconTimeline } from "@tabler/icons-react";
 import Cell from "./Cell";
 import PulsatingCircle from "./PulsatingCircle";
+import StatsButton from "./StatsButton";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -16,7 +24,6 @@ const useStyles = createStyles((theme) => ({
     gridTemplateColumns: "repeat(31, minmax(25px, auto))",
     position: "relative",
     flex: 1,
-
   },
   stats: {
     ref: getStylesRef("stats"),
@@ -38,10 +45,7 @@ const CalendarRow = ({
   cells: number[];
 }) => {
   const { classes } = useStyles();
-  const showMonthStats = () => openModal({
-    children: "Hey",
-    title: "hi"
-  })
+
   return (
     <Group noWrap spacing={4} className={classes.wrapper}>
       <Box className={classes.row} key={rowIndex} pos="relative">
@@ -50,14 +54,8 @@ const CalendarRow = ({
         ))}
         {rowIndex === 0 && <PulsatingCircle />}
       </Box>
-      <Tooltip withinPortal label="Show month's stats">
-        <ActionIcon onClick={showMonthStats} variant="transparent" className={classes.stats}>
-          <IconTimeline />
-        </ActionIcon>
-      </Tooltip>
-
+      <StatsButton rowIndex={rowIndex} />
     </Group>
-
   );
 };
 
