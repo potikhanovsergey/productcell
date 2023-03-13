@@ -1,4 +1,4 @@
-import { observer, useComputed } from "@legendapp/state/react";
+import { observer, useComputed, useObserve } from "@legendapp/state/react";
 import { Chart, ChartProps } from "react-chartjs-2";
 import dayjs from "dayjs";
 import { primaryColor } from "@/MantineTheme";
@@ -13,6 +13,10 @@ import {
   Legend,
 } from "chart.js";
 import { Box, DEFAULT_THEME } from "@mantine/core";
+import { filterBy, monthProductsHash } from "@/store/LegendStore";
+import { useEffect } from "react";
+import { fetchProductsAndSet } from "@/queries/getProducts";
+import { MonthProductsApiResponse } from "@/store/types";
 
 ChartJS.register(
   CategoryScale,
@@ -82,13 +86,78 @@ const MonthUpvotes = ({ rowIndex }: MonthUpvotesProps) => {
     const days = month.isSame(curr, "month")
       ? curr.date()
       : month.daysInMonth();
-    return Array.from(Array(days)).map((_, i) => i + 1);
+    return Array.from(Array(days)).map((_, i) => ({
+      dayIndex: i,
+      label: month.add(i, "day").format("dddd D"),
+    }));
   });
+  const stats = useComputed(
+    () => monthProductsHash.get()?.[filterBy.get()]?.[rowIndex]
+  );
+
+  const grouppedByDay = useComputed(() => {
+    const statsValue = stats.get();
+    if (statsValue) {
+      const hash = statsValue.posts.reduce(
+        (acc: { [key: string]: MonthProductsApiResponse[] }, e) => {
+          const dayIndex = dayjs(e.featuredAt).date() - 1;
+          if (!acc[dayIndex]) acc[dayIndex] = [];
+          acc[dayIndex].push(e);
+          return acc;
+        },
+        {}
+      );
+      const output = labels.get().map((day) => hash[day.dayIndex] || null);
+      return output;
+    } else return [];
+  });
+
   const upvotes = useComputed(() => {
-    return labels.map((l) => Math.floor(Math.random() * (1500 - 0 + 1) + 0));
+    return grouppedByDay
+      .get()
+      .map((day) =>
+        day ? day.reduce((acc, item) => acc + item.votesCount, 0) : null
+      );
   });
   const comments = useComputed(() => {
-    return labels.map((l) => Math.floor(Math.random() * (300 - 0 + 1) + 0));
+    return grouppedByDay
+      .get()
+      .map((day) =>
+        day ? day.reduce((acc, item) => acc + item.commentsCount, 0) : null
+      );
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      let endCursor: string | null = null;
+      let hasNextPage = true;
+      for (const i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) {
+        if (hasNextPage) {
+          const response:
+            | {
+                endCursor: string | null;
+                hasNextPage: boolean;
+              }
+            | undefined = await fetchProductsAndSet({
+            index: rowIndex.toString(),
+            date: month,
+            endCursor,
+          });
+          if (response?.endCursor) endCursor = response.endCursor;
+          if (typeof response?.hasNextPage === "boolean") {
+            hasNextPage = response.hasNextPage;
+          }
+        }
+      }
+    };
+
+    if (!stats.get()) {
+      getData();
+    }
+  }, []);
+
+  useObserve(() => {
+    console.log("Groupped by day", grouppedByDay.get());
   });
 
   return (
@@ -104,7 +173,9 @@ const MonthUpvotes = ({ rowIndex }: MonthUpvotesProps) => {
           plugins: {
             title: {
               display: true,
-              text: "Chart.js Line Chart - Cubic interpolation mode",
+              text: `Product Hunt ${month.format("MMMM")} stats based on ${
+                grouppedByDay.get().flat().length
+              } best products`,
             },
             tooltip: {
               callbacks: {
@@ -136,7 +207,7 @@ const MonthUpvotes = ({ rowIndex }: MonthUpvotesProps) => {
           },
         }}
         data={{
-          labels: labels.get(),
+          labels: labels.get().map((l) => l.label),
           datasets: [
             {
               ...data.datasets[0],

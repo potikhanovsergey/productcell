@@ -35,7 +35,7 @@ const StatsButton = ({ rowIndex }: StatsButtonProps) => {
   const showMonthStats = () =>
     openModal({
       children: <MonthUpvotes rowIndex={rowIndex} />,
-      title: "hi",
+      title: "Month statistics on Product Hunt",
       size: "xl",
       returnFocus: false,
       fullScreen: isMobile,

@@ -1,20 +1,8 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import axios from "axios";
 import { AxiosProductResponse } from "@/store/types";
 import { filterBy, loadingHash, productsHash } from "@/store/LegendStore";
-
-const timezone = "US/Pacific";
-
-const endpoint = "https://api.producthunt.com/v2/api/graphql";
-const headers = {
-  "content-type": "application/json",
-  Authorization: `Bearer ${process.env.PRODUCT_HUNT_API_TOKEN}`,
-};
-
-const options = {
-  method: "POST",
-  headers: headers,
-};
+import { endpoint, options, timezone } from ".";
 
 const graphqlQuery = `query getProductOfTheDay($dateFrom: DateTime!, $dateTo: DateTime!, $topic: String) {
     posts(
