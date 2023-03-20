@@ -173,16 +173,19 @@ const MonthUpvotes = ({ rowIndex }: MonthUpvotesProps) => {
           plugins: {
             title: {
               display: true,
-              text: `Product Hunt ${month.format("MMMM")} stats based on ${
+              text: `Product Hunt ${month.format("YYYY MMMM")} stats based on ${
                 grouppedByDay.get().flat().length
-              } best products`,
+              } most upvoted products`,
             },
             tooltip: {
               callbacks: {
                 title: (tooltipItems) => {
                   const dayNumber = Number(tooltipItems[0].parsed.x) as number;
                   const date = month.add(dayNumber, "day");
-                  return date.format("MMMM D, dddd");
+                  return (
+                    date.format("MMMM D, dddd") +
+                    `, ${grouppedByDay[dayNumber].length} products`
+                  );
                 },
               },
             },

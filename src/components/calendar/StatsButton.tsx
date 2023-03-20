@@ -15,12 +15,10 @@ const MonthUpvotes = dynamic(() => import("./MonthUpvotes"));
 const useStyles = createStyles((theme) => ({
   stats: {
     ref: getStylesRef("stats"),
-    opacity: 0,
     width: 24,
     height: 24,
     "&:hover, &:focus": {
       color: theme.colors[theme.primaryColor][5],
-      opacity: 1,
     },
   },
 }));
