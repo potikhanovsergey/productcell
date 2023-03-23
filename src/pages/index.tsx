@@ -68,9 +68,9 @@ const IndexPage = () => {
               </Text>
 
             </Box>
-            <Group>
-            <Filter />
-            <Select size="xs" label="Mode" value={modeValue} onChange={(value) => value && mode.set(value)} data={[{ label: "Days", value: "days" }, { label: "Weeks", value: "weeks" }]} />
+            <Group position='center'>
+              <Filter />
+              <Select size="xs" label="Mode" value={modeValue} onChange={(value) => value && mode.set(value)} data={[{ label: "Days", value: "days" }, { label: "Weeks", value: "weeks" }]} />
             </Group>
             <Center mt="xs">
                 <a href="https://www.producthunt.com/posts/product-cell?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-product&#0045;cell" target="_blank" rel="noreferrer">
