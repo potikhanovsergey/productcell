@@ -1,12 +1,13 @@
-import { observer, Show } from "@legendapp/state/react";
+import { mode } from "@/store/LegendStore";
+import { observer } from "@legendapp/state/react";
 import { Box, createStyles, getStylesRef } from "@mantine/core";
 import Cell from "./Cell";
 import PulsatingCircle from "./PulsatingCircle";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { cols }: { cols: number }) => ({
   row: {
     display: "grid",
-    gridTemplateColumns: "repeat(31, minmax(25px, auto))",
+    gridTemplateColumns: `repeat(${cols}, minmax(25px, auto))`,
     [`&:hover .${getStylesRef("stats")}`]: {
       opacity: 1,
     },
@@ -28,7 +29,7 @@ const CalendarRow = ({
   rowIndex: number;
   cells: number[];
 }) => {
-  const { classes } = useStyles();
+  const { classes } = useStyles({ cols: mode.get() === "days" ? 31 : 52 });
   return (
     <Box className={classes.row} key={rowIndex} pos="relative">
       {cells.map((_, cellIndex) => (

@@ -1,8 +1,8 @@
-import { Box, BoxProps, Tooltip } from "@mantine/core";
-import { observer, useComputed } from "@legendapp/state/react";
-import { drawerDetails, hoveredRowCell } from "@/store/LegendStore";
+import { Box, BoxProps, Group, Stack, Tooltip } from "@mantine/core";
+import { observer, Show, useComputed } from "@legendapp/state/react";
+import { drawerDetails, hoveredRowCell, mode } from "@/store/LegendStore";
 import CalendarRow from "./CalendarRow";
-import { rows } from "@/pages/_app";
+import { currentYearWeeksArray, rows, weeksArray, years, yearsArray } from "@/pages/_app";
 import dynamic from "next/dynamic";
 
 const TooltipLabel = dynamic(() => import("./TooltipLabel"), { ssr: false });
@@ -11,6 +11,10 @@ const CalendarGrid = (props: BoxProps) => {
   const tooltipVisible = useComputed(() => {
     return hoveredRowCell.get() !== null && !drawerDetails.opened.get();
   });
+
+  const isDaysMode = useComputed(() => {
+    return mode.get() === "days"
+  })
   return (
     <Tooltip.Floating
       multiline
@@ -25,11 +29,19 @@ const CalendarGrid = (props: BoxProps) => {
       color="blue"
       position="top"
     >
-      <Box display="grid" {...props} sx={{ gridAutoRows: "1fr" }}>
-        {rows.map((cells, rowIndex) => (
-          <CalendarRow key={rowIndex} rowIndex={rowIndex} cells={cells} />
-        ))}
-      </Box>
+      <Group noWrap spacing={4}>
+        <Box display="grid" {...props} sx={{ gridAutoRows: "1fr" }}>
+          <Show if={isDaysMode} else={      [currentYearWeeksArray, ...yearsArray].map((cells, rowIndex) => (
+            <CalendarRow key={rowIndex} rowIndex={rowIndex} cells={cells} />
+          ))}>
+          {rows.map((cells, rowIndex) => (
+            <CalendarRow key={rowIndex} rowIndex={rowIndex} cells={cells} />
+          ))}
+          </Show>
+
+        </Box>
+      </Group>
+
     </Tooltip.Floating>
   );
 };

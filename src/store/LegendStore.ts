@@ -9,6 +9,7 @@ export const loadingHash = observable([] as string[]);
 export const minDate = dayjs().subtract(35, "month").endOf("month");
 
 export const filterBy = observable("all");
+export const mode = observable("days")
 
 export const drawerDetails = observable({
   opened: false,
@@ -21,7 +22,7 @@ export const hoveredIndex = computed(() => {
 });
 
 export const hoveredProduct = computed(() => {
-  const produchHashValue = productsHash[filterBy.get()].get();
+  const produchHashValue = productsHash[filterBy.get()][mode.get()].get();
   return produchHashValue?.[hoveredIndex.get()]?.[0];
 });
 
@@ -29,9 +30,16 @@ export const hoveredCellDate = computed(() => {
   const hoveredRowValue = hoveredRow.get();
   const hoveredRowCellValue = hoveredRowCell.get();
   if (hoveredRowValue === null || hoveredRowCellValue === null) return null;
-  return dayjs()
+
+  if (mode.get() === "days") {
+    return dayjs()
     .startOf("month")
     .subtract(hoveredRowValue, "month")
     .add(hoveredRowCellValue, "day")
     .format("MMMM D YYYY, dddd");
+  } else {
+    const date = dayjs().startOf("year").subtract(hoveredRowValue, "year").add(hoveredRowCellValue, "week")
+    return `${date.format("MMM D, YYYY")} - ${date.add(1, "week").subtract(1, "second").format("MMM D, YYYY")}`
+  }
+
 });

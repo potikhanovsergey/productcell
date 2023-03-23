@@ -7,21 +7,31 @@ import {
 import MantineTheme from "@/MantineTheme";
 import { Analytics } from "@vercel/analytics/react";
 import utc from "dayjs/plugin/utc";
+import weekOfYear from "dayjs/plugin/weekOfYear";
 import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 import { enableLegendStateReact } from "@legendapp/state/react";
 import { useState } from "react";
 
 dayjs.extend(utc);
+dayjs.extend(weekOfYear);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Los_Angeles");
 
 enableLegendStateReact();
 
-const months = 36;
+export const months = 36;
+export const years = 6;
+
 
 export const monthsArray = Array(months).fill(null);
 export const daysArray = Array(31).fill(null);
+
+
+export const currentYearWeeksArray = Object.keys(Array(dayjs().week()).fill(null)).map(Number)
+export const weeksArray = Object.keys(Array(52).fill(null)).map(Number)
+
+export const yearsArray = Object.keys(Array(years).fill(null)).map(y => weeksArray)
 
 export const rows: number[][] = [];
 for (let i = 0; i < months; i++) {

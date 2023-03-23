@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 import { AxiosProductResponse } from "@/store/types";
-import { filterBy, loadingHash, productsHash } from "@/store/LegendStore";
+import { filterBy, loadingHash, mode, productsHash } from "@/store/LegendStore";
 
 const timezone = "US/Pacific";
 
@@ -104,13 +104,8 @@ export const fetchProductAndSet = async ({
     if (response === 429) {
     } else if (response?.data) {
       const filterByValue = filterBy.get();
-      productsHash.set((prev) => ({
-        ...prev,
-        [filterByValue]: {
-          ...prev[filterByValue],
-          [index]: response.data.data.posts.nodes,
-        },
-      }));
+      const modeValue = mode.get();
+      productsHash[filterByValue][modeValue][index].set(response.data.data.posts.nodes)
     }
   }
 };

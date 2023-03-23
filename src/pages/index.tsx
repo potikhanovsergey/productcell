@@ -1,5 +1,7 @@
 import Filter from "@/components/Filter";
 import Layout from "@/components/layout/Layout";
+import { mode } from "@/store/LegendStore";
+import { useSelector } from "@legendapp/state/react";
 import {
   Box,
   Container,
@@ -11,6 +13,7 @@ import {
   Stack,
   Center,
   Group,
+  Select,
 } from "@mantine/core";
 import dynamic from "next/dynamic";
 
@@ -25,6 +28,8 @@ const Calendar = dynamic(() => import("@/components/calendar/Calendar"), {
 
 const IndexPage = () => {
   const theme = useMantineTheme();
+
+  const modeValue = useSelector(mode)
   return (
     <Layout>
       <Box py={20}>
@@ -63,14 +68,14 @@ const IndexPage = () => {
               </Text>
 
             </Box>
+            <Group>
             <Filter />
+            <Select size="xs" label="Mode" value={modeValue} onChange={(value) => value && mode.set(value)} data={[{ label: "Days", value: "days" }, { label: "Weeks", value: "weeks" }]} />
+            </Group>
             <Center mt="xs">
-              <Group position="center">
                 <a href="https://www.producthunt.com/posts/product-cell?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-product&#0045;cell" target="_blank" rel="noreferrer">
                   <Image src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=382506&theme=neutral`} alt="Product&#0032;Cell - See&#0032;the&#0032;best&#0032;of&#0032;Product&#0032;Hunt&#0032;through&#0032;the&#0032;life&#0032;calendar | Product Hunt" width="auto" height={40} />
                 </a>
-                <a href="https://madepublic.io/projects/product-cell?source=embed" target="_blank" rel="noreferrer"> <Image alt="madepublic" src="https://madepublic.io/images/embed.png" height={40} width="auto" /></a>
-              </Group>
             </Center>
           </Stack>
         </Container>

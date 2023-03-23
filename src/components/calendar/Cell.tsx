@@ -13,6 +13,7 @@ import {
   filterBy,
   hoveredRow,
   hoveredRowCell,
+  mode,
   productsHash,
 } from "@/store/LegendStore";
 import { observer, useComputed } from "@legendapp/state/react";
@@ -67,7 +68,7 @@ const Cell: FC<DayProps> = forwardRef(
 
     const onClick = () => {
       const index = `${rowIndex} ${cellIndex}`;
-      const products = productsHash[filterBy.get()][index].get();
+      const products = productsHash[filterBy.get()][mode.get()][index].get();
       const date = getDateByIndexes({ rowIndex, cellIndex });
       if (products) {
         batch(() => {
@@ -87,7 +88,7 @@ const Cell: FC<DayProps> = forwardRef(
     };
 
     const index = `${rowIndex} ${cellIndex}`;
-    const product = productsHash[filterBy.get()].get()?.[index]?.[0];
+    const product = productsHash[filterBy.get()][mode.get()][index].get()?.[0];
     const { classes } = useStyles({ product });
 
     const ariaLabel = useComputed(() =>
