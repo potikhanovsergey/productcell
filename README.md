@@ -1,38 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Описание
 
-## Getting Started
+Product Cell - это приложение, в котором вы можете просматривать лучшие продукты, опубликованные на Product Hunt в виде интерактивного календаря. 
 
-First, run the development server:
+<img width="1469" alt="продукт сел" src="https://github.com/potikhanovsergey/productcell/assets/94698814/72e2e451-9dcf-4ce4-a49b-a60dd4e50c93">
+<img width="1469" alt="image" src="https://github.com/potikhanovsergey/productcell/assets/94698814/ed519e9d-ecf3-4202-b4a9-5af559ccef45">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Короткое описание использования 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1) Кликните на клеточку, чтобы увидеть продукт дня (у которого больше всего апвотуов)
+2) Кликните на клеточку снова, чтобы увидеть топ продуктов этого дня
+3) Отфильтруйте результаты по интересующим темам (аналитика, искусственный интеллект и другие)
+4) Реализовано как PWA - можно поместить ссылку себе на рабочий экран телефона в качестве мобильного приложения и каждый день с удобством открывать для себя новые продукты!)
